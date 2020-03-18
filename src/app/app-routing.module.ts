@@ -1,10 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { TicTacToeComponent } from './games/tic-tac-toe/tic-tac-toe.component';
+import { PageNotFoundComponent } from './pagenotfound/pagenotfound.component';
 
 
 const routes: Routes = [
-  { path: 'tictactoe', component: TicTacToeComponent}
+  { path: 'tictactoe', component: TicTacToeComponent },
+  { path: '', redirectTo: '/', pathMatch: 'full' },
+  { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({

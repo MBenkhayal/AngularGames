@@ -1,23 +1,24 @@
 <p>Tic Tac Toe</p>
 <div>
-    <button type="button" id="00" (click)="onButtonClick($event, 0, 0)"></button>
-    <button type="button" id="01" (click)="onButtonClick($event, 0, 1)"></button>
-    <button type="button" id="02" (click)="onButtonClick($event, 0, 2)"></button>
+    <button type="button" id="00" (click)="onButtonClick($event.target, 0, 0)"></button>
+    <button type="button" id="01" (click)="onButtonClick($event.target, 0, 1)"></button>
+    <button type="button" id="02" (click)="onButtonClick($event.target, 0, 2)"></button>
 </div>
 <div>
-    <button type="button" id="10" (click)="onButtonClick($event, 1, 0)"></button>
-    <button type="button" id="11" (click)="onButtonClick($event, 1, 1)"></button>
-    <button type="button" id="12" (click)="onButtonClick($event, 1, 2)"></button>
+    <button type="button" id="10" (click)="onButtonClick($event.target, 1, 0)"></button>
+    <button type="button" id="11" (click)="onButtonClick($event.target, 1, 1)"></button>
+    <button type="button" id="12" (click)="onButtonClick($event.target, 1, 2)"></button>
 </div>
 <div>
-    <button type="button" id="20" (click)="onButtonClick($event, 2, 0)"></button>
-    <button type="button" id="21" (click)="onButtonClick($event, 2, 1)"></button>
-    <button type="button" id="22" (click)="onButtonClick($event, 2, 2)"></button>
+    <button type="button" id="20" (click)="onButtonClick($event.target, 2, 0)"></button>
+    <button type="button" id="21" (click)="onButtonClick($event.target, 2, 1)"></button>
+    <button type="button" id="22" (click)="onButtonClick($event.target, 2, 2)"></button>
 </div>
 
 
 <div>
     <!-- Add current game status here (ie new game, which player's turn it is, etc) -->
+    <p id="gameStatus">{{gameStatus}}</p>
 </div>
 
 <nav style="text-align: center;">

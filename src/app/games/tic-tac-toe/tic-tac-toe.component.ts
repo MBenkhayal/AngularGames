@@ -23,7 +23,7 @@ export class TicTacToeComponent implements OnInit {
       ['', '', '']
     ];
     this.playerTurn = 'x';
-    this.gameStatus = 'X turn';
+    this.gameStatus = `Player x's turn`;
   }
 
   onButtonClick(button, row, col) {
@@ -34,32 +34,34 @@ export class TicTacToeComponent implements OnInit {
     if(this.playerTurn === 'x') {
       this.gameBoard[row][col] = 'x';
       button.textContent = 'x';
-      // button.disabled=true;
+      button.disabled = true;
       this.gameStatus = `Player o's turn`;
       this.playerTurn = 'o';
+      this.checkBoard('x');
     } else if(this.playerTurn ==='o') {
       this.gameBoard[row][col] = 'o';
       button.textContent = 'o';
+      button.disabled = true;
       this.gameStatus = `Player x's turn`;
       this.playerTurn = 'x';
+      this.checkBoard('o');
     }
-    this.checkBoard();
+    // this.checkBoard();
   }
 
-  checkBoard() {
-    if(this.gameBoard[0][0] == this.gameBoard[0][1] && this.gameBoard[0][0] == this.gameBoard[0][2] ||
-        this.gameBoard[1][0] == this.gameBoard[1][1] && this.gameBoard[1][0] == this.gameBoard[1][2] ||
-        this.gameBoard[2][0] == this.gameBoard[2][1] && this.gameBoard[2][0] == this.gameBoard[2][2] ||
+  checkBoard(lastPlayed) {
+    if(this.gameBoard[0][0] == lastPlayed && this.gameBoard[0][1] == lastPlayed &&  this.gameBoard[0][2] == lastPlayed ||
+        this.gameBoard[1][0] == lastPlayed && this.gameBoard[1][1] == lastPlayed &&  this.gameBoard[1][2] == lastPlayed ||
+        this.gameBoard[2][0] == lastPlayed && this.gameBoard[2][1] == lastPlayed &&  this.gameBoard[2][2] == lastPlayed ||
 
-        this.gameBoard[0][0] == this.gameBoard[1][0] && this.gameBoard[0][0] == this.gameBoard[2][0] ||
-        this.gameBoard[0][1] == this.gameBoard[1][1] && this.gameBoard[0][1] == this.gameBoard[2][1] ||
-        this.gameBoard[0][2] == this.gameBoard[1][2] && this.gameBoard[0][2] == this.gameBoard[2][2] ||
+        this.gameBoard[0][0] == lastPlayed && this.gameBoard[1][0] == lastPlayed &&  this.gameBoard[2][0] == lastPlayed ||
+        this.gameBoard[0][1] == lastPlayed && this.gameBoard[1][1] == lastPlayed &&  this.gameBoard[2][1] == lastPlayed ||
+        this.gameBoard[0][2] == lastPlayed && this.gameBoard[1][2] == lastPlayed &&  this.gameBoard[2][2] == lastPlayed ||
 
-        this.gameBoard[0][0] == this.gameBoard[1][1] && this.gameBoard[0][0] == this.gameBoard[2][2] ||
-        this.gameBoard[2][0] == this.gameBoard[1][1] && this.gameBoard[2][0] == this.gameBoard[0][2]) {
+        this.gameBoard[0][0] == lastPlayed && this.gameBoard[1][1] == lastPlayed &&  this.gameBoard[2][2] == lastPlayed ||
+        this.gameBoard[2][0] == lastPlayed && this.gameBoard[1][1] == lastPlayed &&  this.gameBoard[0][2] == lastPlayed) {
           //set all buttons to be disabled, game ends, declare winner
-          let winner = 'x' ? this.playerTurn === 'o' : 'o';
-          this.gameStatus = `The winner is ${winner}!`;
+          this.gameStatus = `The winner is ${lastPlayed}!`;
         }
   }
 }

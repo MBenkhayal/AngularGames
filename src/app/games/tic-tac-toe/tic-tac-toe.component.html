@@ -1,20 +1,31 @@
 <div style="text-align: center;">
     <p>Tic Tac Toe</p>
-    <div>
-        <button type="button" class="tictactoe-btn" id="00" (click)="onButtonClick($event.target, 0, 0)"></button>
-        <button type="button" class="tictactoe-btn" id="01" (click)="onButtonClick($event.target, 0, 1)"></button>
-        <button type="button" class="tictactoe-btn" id="02" (click)="onButtonClick($event.target, 0, 2)"></button>
-    </div>
-    <div>
-        <button type="button" class="tictactoe-btn" id="10" (click)="onButtonClick($event.target, 1, 0)"></button>
-        <button type="button" class="tictactoe-btn" id="11" (click)="onButtonClick($event.target, 1, 1)"></button>
-        <button type="button" class="tictactoe-btn" id="12" (click)="onButtonClick($event.target, 1, 2)"></button>
-    </div>
-    <div>
-        <button type="button" class="tictactoe-btn" id="20" (click)="onButtonClick($event.target, 2, 0)"></button>
-        <button type="button" class="tictactoe-btn" id="21" (click)="onButtonClick($event.target, 2, 1)"></button>
-        <button type="button" class="tictactoe-btn" id="22" (click)="onButtonClick($event.target, 2, 2)"></button>
-    </div>
+    <table align="center">
+        <tr>
+            <td><button type="button" class="tictactoe-btn" id="00"
+                    (click)="onButtonClick($event.target, 0, 0)"></button></td>
+            <td><button type="button" class="tictactoe-btn" id="01"
+                    (click)="onButtonClick($event.target, 0, 1)"></button></td>
+            <td><button type="button" class="tictactoe-btn" id="02"
+                    (click)="onButtonClick($event.target, 0, 2)"></button></td>
+        </tr>
+        <tr>
+            <td><button type="button" class="tictactoe-btn" id="10"
+                    (click)="onButtonClick($event.target, 1, 0)"></button></td>
+            <td><button type="button" class="tictactoe-btn" id="11"
+                    (click)="onButtonClick($event.target, 1, 1)"></button></td>
+            <td><button type="button" class="tictactoe-btn" id="12"
+                    (click)="onButtonClick($event.target, 1, 2)"></button></td>
+        </tr>
+        <tr>
+            <td><button type="button" class="tictactoe-btn" id="20"
+                    (click)="onButtonClick($event.target, 2, 0)"></button></td>
+            <td><button type="button" class="tictactoe-btn" id="21"
+                    (click)="onButtonClick($event.target, 2, 1)"></button></td>
+            <td><button type="button" class="tictactoe-btn" id="22"
+                    (click)="onButtonClick($event.target, 2, 2)"></button></td>
+        </tr>
+    </table>
 </div>
 
 <div style="text-align: center;">

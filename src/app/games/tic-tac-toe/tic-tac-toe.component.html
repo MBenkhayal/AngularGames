@@ -2,27 +2,27 @@
     <p>Tic Tac Toe</p>
     <table align="center">
         <tr>
-            <td><button type="button" class="tictactoe-btn" id="00"
+            <td><button type="button" class="tictactoe-btn" id="00" [disabled]="buttonDisabled(0,0)"
                     (click)="onButtonClick($event.target, 0, 0)"></button></td>
-            <td><button type="button" class="tictactoe-btn" id="01"
+            <td><button type="button" class="tictactoe-btn" id="01" [disabled]="buttonDisabled(0,1)"
                     (click)="onButtonClick($event.target, 0, 1)"></button></td>
-            <td><button type="button" class="tictactoe-btn" id="02"
+            <td><button type="button" class="tictactoe-btn" id="02" [disabled]="buttonDisabled(0,2)"
                     (click)="onButtonClick($event.target, 0, 2)"></button></td>
         </tr>
         <tr>
-            <td><button type="button" class="tictactoe-btn" id="10"
+            <td><button type="button" class="tictactoe-btn" id="10" [disabled]="buttonDisabled(1,0)"
                     (click)="onButtonClick($event.target, 1, 0)"></button></td>
-            <td><button type="button" class="tictactoe-btn" id="11"
+            <td><button type="button" class="tictactoe-btn" id="11" [disabled]="buttonDisabled(1,1)"
                     (click)="onButtonClick($event.target, 1, 1)"></button></td>
-            <td><button type="button" class="tictactoe-btn" id="12"
+            <td><button type="button" class="tictactoe-btn" id="12" [disabled]="buttonDisabled(1,2)"
                     (click)="onButtonClick($event.target, 1, 2)"></button></td>
         </tr>
         <tr>
-            <td><button type="button" class="tictactoe-btn" id="20"
+            <td><button type="button" class="tictactoe-btn" id="20" [disabled]="buttonDisabled(2,0)"
                     (click)="onButtonClick($event.target, 2, 0)"></button></td>
-            <td><button type="button" class="tictactoe-btn" id="21"
+            <td><button type="button" class="tictactoe-btn" id="21" [disabled]="buttonDisabled(2,1)"
                     (click)="onButtonClick($event.target, 2, 1)"></button></td>
-            <td><button type="button" class="tictactoe-btn" id="22"
+            <td><button type="button" class="tictactoe-btn" id="22" [disabled]="buttonDisabled(2,2)"
                     (click)="onButtonClick($event.target, 2, 2)"></button></td>
         </tr>
     </table>

@@ -76,12 +76,14 @@ export class TicTacToeComponent implements OnInit {
       this.gameBoard[2][0] == lastPlayed && this.gameBoard[1][1] == lastPlayed && this.gameBoard[0][2] == lastPlayed) {
       //set all buttons to be disabled, game ends, declare winner
       this.gameStatus = `The winner is ${lastPlayed}!`;
+      this.disableAllButtons();
     }
   }
 
   newGame() {
     this.initializeGame();
     this.resetButtonText();
+    this.enableAllButtons();
   }
 
   resetButtonText() {
@@ -94,5 +96,29 @@ export class TicTacToeComponent implements OnInit {
     this.twoZero.nativeElement.innerText = '';
     this.twoOne.nativeElement.innerText = '';
     this.twoTwo.nativeElement.innerText = '';
+  }
+
+  disableAllButtons() {
+    this.zeroZero.nativeElement.disabled = true;
+    this.zeroOne.nativeElement.disabled = true;
+    this.zeroTwo.nativeElement.disabled = true;
+    this.oneZero.nativeElement.disabled = true;
+    this.oneOne.nativeElement.disabled = true;
+    this.oneTwo.nativeElement.disabled = true;
+    this.twoZero.nativeElement.disabled = true;
+    this.twoOne.nativeElement.disabled = true;
+    this.twoTwo.nativeElement.disabled = true;
+  }
+
+  enableAllButtons() {
+    this.zeroZero.nativeElement.disabled = false;
+    this.zeroOne.nativeElement.disabled = false;
+    this.zeroTwo.nativeElement.disabled = false;
+    this.oneZero.nativeElement.disabled = false;
+    this.oneOne.nativeElement.disabled = false;
+    this.oneTwo.nativeElement.disabled = false;
+    this.twoZero.nativeElement.disabled = false;
+    this.twoOne.nativeElement.disabled = false;
+    this.twoTwo.nativeElement.disabled = false;
   }
 }

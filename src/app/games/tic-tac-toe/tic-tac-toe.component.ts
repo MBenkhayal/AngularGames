@@ -78,4 +78,21 @@ export class TicTacToeComponent implements OnInit {
       this.gameStatus = `The winner is ${lastPlayed}!`;
     }
   }
+
+  newGame() {
+    this.initializeGame();
+    this.resetButtonText();
+  }
+
+  resetButtonText() {
+    this.zeroZero.nativeElement.innerText = '';
+    this.zeroOne.nativeElement.innerText = '';
+    this.zeroTwo.nativeElement.innerText = '';
+    this.oneZero.nativeElement.innerText = '';
+    this.oneOne.nativeElement.innerText = '';
+    this.oneTwo.nativeElement.innerText = '';
+    this.twoZero.nativeElement.innerText = '';
+    this.twoOne.nativeElement.innerText = '';
+    this.twoTwo.nativeElement.innerText = '';
+  }
 }

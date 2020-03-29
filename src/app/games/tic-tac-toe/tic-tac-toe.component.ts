@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'tic-tac-toe',
@@ -6,6 +6,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./tic-tac-toe.component.scss']
 })
 export class TicTacToeComponent implements OnInit {
+  //get access to all of the individual buttons
+  @ViewChild('00') zeroZero;
+  @ViewChild('01') zeroOne;
+  @ViewChild('02') zeroTwo;
+  @ViewChild('10') oneZero;
+  @ViewChild('11') oneOne;
+  @ViewChild('12') oneTwo;
+  @ViewChild('20') twoZero;
+  @ViewChild('21') twoOne;
+  @ViewChild('22') twoTwo;
+
   playerTurn = '';
   gameStatus = '';
   gameBoard = [];
@@ -48,6 +59,7 @@ export class TicTacToeComponent implements OnInit {
       this.playerTurn = 'x';
       this.checkBoard('o');
     }
+    // console.log(this.zerozero.nativeElement.innerText)
     // this.checkBoard();
   }
 

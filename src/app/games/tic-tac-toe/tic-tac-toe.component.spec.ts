@@ -8,9 +8,9 @@ describe('TicTacToeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TicTacToeComponent ]
+      declarations: [TicTacToeComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -21,5 +21,12 @@ describe('TicTacToeComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('buttonDisabled should return true if button is x or o', () => {
+    component.gameBoard[0][0] = 'x';
+    component.gameBoard[0][1] = 'o';
+    expect(component.buttonDisabled(0, 0)).toBeTruthy();
+    expect(component.buttonDisabled(0, 1)).toBeTruthy();
   });
 });

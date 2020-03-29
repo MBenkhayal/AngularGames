@@ -29,4 +29,8 @@ describe('TicTacToeComponent', () => {
     expect(component.buttonDisabled(0, 0)).toBeTruthy();
     expect(component.buttonDisabled(0, 1)).toBeTruthy();
   });
+
+  it('buttonDisabled should return false if button is empty (has not been clicked yet)', () => {
+    expect(component.buttonDisabled(0, 0)).toBeFalsy(); //default game borad is unclicked onInit, so can just validate
+  });
 });

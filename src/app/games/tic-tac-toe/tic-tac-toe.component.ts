@@ -42,10 +42,6 @@ export class TicTacToeComponent implements OnInit {
   }
 
   onButtonClick(button, row, col) {
-    if (button.textContent != '') { //think about this vs just disabling the button
-      return;
-    }
-
     if (this.playerTurn === 'x') {
       this.gameBoard[row][col] = 'x';
       button.textContent = 'x';
@@ -59,8 +55,6 @@ export class TicTacToeComponent implements OnInit {
       this.playerTurn = 'x';
       this.checkBoard('o');
     }
-    // console.log(this.zerozero.nativeElement.innerText)
-    // this.checkBoard();
   }
 
   checkBoard(lastPlayed) {

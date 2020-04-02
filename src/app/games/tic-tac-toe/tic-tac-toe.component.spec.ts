@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TicTacToeComponent } from './tic-tac-toe.component';
 
-describe('TicTacToeComponent', () => {
+fdescribe('TicTacToeComponent', () => {
   let component: TicTacToeComponent;
   let fixture: ComponentFixture<TicTacToeComponent>;
 
@@ -32,5 +32,29 @@ describe('TicTacToeComponent', () => {
 
   it('buttonDisabled should return false if button is empty (has not been clicked yet)', () => {
     expect(component.buttonDisabled(0, 0)).toBeFalsy(); //default game borad is unclicked onInit, so can just validate
+  });
+
+  fit('onButtonClick should update buttons and board correctly based on whichever player turn it is', () => {
+    var button = {
+      textContent: ""
+    };
+    component.playerTurn = "x";
+
+    component.onButtonClick(button, 0, 1);
+    expect(component.gameBoard[0][1]).toEqual("x");
+    expect(button.textContent).toEqual("x");
+    expect(component.gameStatus).toEqual("Player o's turn");
+    expect(component.playerTurn).toEqual("o");
+
+    button = {
+      textContent: ""
+    };
+    component.playerTurn = "o";
+
+    component.onButtonClick(button, 0, 2);
+    expect(component.gameBoard[0][2]).toEqual("o");
+    expect(button.textContent).toEqual("o");
+    expect(component.gameStatus).toEqual("Player x's turn");
+    expect(component.playerTurn).toEqual("x");
   });
 });

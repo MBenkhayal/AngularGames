@@ -20,6 +20,7 @@ export class TicTacToeComponent implements OnInit {
   playerTurn = '';
   gameStatus = '';
   gameBoard = [];
+  turn = 0;
 
   constructor() { }
 
@@ -35,6 +36,7 @@ export class TicTacToeComponent implements OnInit {
     ];
     this.playerTurn = 'x';
     this.gameStatus = `Player x's turn`;
+    this.turn = 0;
   }
 
   buttonDisabled(row, col) {
@@ -42,6 +44,7 @@ export class TicTacToeComponent implements OnInit {
   }
 
   onButtonClick(button, row, col) {
+    this.turn++;
     if (this.playerTurn === 'x') {
       this.gameBoard[row][col] = 'x';
       button.textContent = 'x';
@@ -71,6 +74,8 @@ export class TicTacToeComponent implements OnInit {
       //set all buttons to be disabled, game ends, declare winner
       this.gameStatus = `The winner is ${lastPlayed}!`;
       this.disableAllButtons();
+    } else if (this.turn == 9) {
+      this.gameStatus = `No winner, please play again!`;
     }
   }
 

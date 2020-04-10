@@ -17,4 +17,7 @@ export class SnakeComponent implements OnInit {
   ngOnInit(): void {
     this.context = this.canvas.nativeElement.getContext("2d");
   }
+
+  startGame() {
+  }
 }

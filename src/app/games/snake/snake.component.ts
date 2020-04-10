@@ -11,6 +11,9 @@ export class SnakeComponent implements OnInit {
   context: any;// = this.canvas.getContext("2d");
   width = 500;
   height = 500;
+  direction = "right";
+  snake = [];
+  score = 0;
 
   constructor() { }
 
@@ -19,5 +22,16 @@ export class SnakeComponent implements OnInit {
   }
 
   startGame() {
+    this.direction = "right";
+    this.snake = [{ x: 4, y: 0 }, { x: 3, y: 0 }, { x: 2, y: 0 }, { x: 1, y: 0 }, { x: 0, y: 0 }];
+    this.score = 0;
+
+    setInterval(() => {
+      this.drawBoard();
+    }, 40);
+  }
+
+  drawBoard() {
+
   }
 }

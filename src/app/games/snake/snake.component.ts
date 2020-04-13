@@ -20,6 +20,8 @@ export class SnakeComponent implements OnInit {
 
   ngOnInit(): void {
     this.context = this.canvas.nativeElement.getContext("2d");
+    this.context.canvas.width = this.width;
+    this.context.canvas.height = this.height;
   }
 
   startGame() {
@@ -36,7 +38,6 @@ export class SnakeComponent implements OnInit {
     //paint canvas
     this.context.fillStyle = "white";
     this.context.fillRect(0, 0, this.width, this.height);
-
 
     this.moveSnake();
 

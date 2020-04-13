@@ -20,6 +20,8 @@ export class SnakeComponent implements OnInit {
 
   ngOnInit(): void {
     this.context = this.canvas.nativeElement.getContext("2d");
+    /* The below width/height setting is necessary to correct the canvas rendering and remove blurriness
+      and improper sizing */
     this.context.canvas.width = this.width;
     this.context.canvas.height = this.height;
   }

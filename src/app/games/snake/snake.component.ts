@@ -108,6 +108,11 @@ export class SnakeComponent implements OnInit {
     if (xHead === -1 || xHead == this.width / this.cellWidth || yHead == -1 || yHead === this.height / this.cellWidth) {
       return true;
     }
+    if (this.snake.find((cell) => {
+      return (xHead == cell.x && yHead == cell.y);
+    })) {
+      return true;
+    };
   }
 
   createFood() {

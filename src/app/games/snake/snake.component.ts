@@ -16,6 +16,7 @@ export class SnakeComponent implements OnInit {
   score = 0;
   cellWidth = 10; //used for both width/height of an individual cell
   interval;
+  foodLocation;
 
   constructor() { }
 
@@ -31,6 +32,7 @@ export class SnakeComponent implements OnInit {
     this.direction = "right";
     this.snake = [{ x: 4, y: 0 }, { x: 3, y: 0 }, { x: 2, y: 0 }, { x: 1, y: 0 }, { x: 0, y: 0 }];
     this.score = 0;
+    this.createFood();
 
     this.interval = setInterval(() => {
       this.drawBoard();
@@ -47,11 +49,19 @@ export class SnakeComponent implements OnInit {
       this.paintCell(cell.x, cell.y)
     });
 
+    //create and paint food
+    this.paintCell(this.foodLocation.x, this.foodLocation.y, true);
+
     this.moveSnake();
   }
 
-  paintCell(x, y) {
-    this.context.fillStyle = "green";
+  paintCell(x, y, isFood = false) {
+    if (isFood) {
+      this.context.fillStyle = "brown";
+    } else {
+      this.context.fillStyle = "green";
+    }
+
     this.context.fillRect(x * this.cellWidth, y * this.cellWidth, this.cellWidth, this.cellWidth);
     this.context.strokeStyle = "white";
     this.context.strokeRect(x * this.cellWidth, y * this.cellWidth, this.cellWidth, this.cellWidth);
@@ -80,7 +90,14 @@ export class SnakeComponent implements OnInit {
       clearInterval(this.interval);
     }
 
-    var tail = this.snake.pop();
+    //need to clean up this code
+    var tail = { x: xHead, y: yHead };
+    //check if food is eaten, if so, do not pop snake tail, just "expand" snake one block and create new food
+    if (xHead == this.foodLocation.x && yHead == this.foodLocation.y) {
+      this.createFood();
+    } else {
+      tail = this.snake.pop();
+    }
     tail.x = xHead;
     tail.y = yHead;
     this.snake.unshift(tail);
@@ -90,6 +107,12 @@ export class SnakeComponent implements OnInit {
     if (xHead === -1 || xHead == this.width / this.cellWidth || yHead == -1 || yHead === this.height / this.cellWidth) {
       return true;
     }
+  }
+
+  createFood() {
+    var xTemp = Math.round(Math.random() * (this.width / this.cellWidth) - this.cellWidth);
+    var yTemp = Math.round(Math.random() * (this.height / this.cellWidth) - this.cellWidth);
+    this.foodLocation = { x: xTemp, y: yTemp };
   }
 
   @HostListener('document:keydown', ["$event"])

@@ -95,6 +95,7 @@ export class SnakeComponent implements OnInit {
     //check if food is eaten, if so, do not pop snake tail, just "expand" snake one block and create new food
     if (xHead == this.foodLocation.x && yHead == this.foodLocation.y) {
       this.createFood();
+      this.score++;
     } else {
       tail = this.snake.pop();
     }
@@ -110,8 +111,8 @@ export class SnakeComponent implements OnInit {
   }
 
   createFood() {
-    var xTemp = Math.round(Math.random() * (this.width / this.cellWidth) - this.cellWidth);
-    var yTemp = Math.round(Math.random() * (this.height / this.cellWidth) - this.cellWidth);
+    var xTemp = Math.round(Math.random() * (this.width - this.cellWidth) / this.cellWidth);
+    var yTemp = Math.round(Math.random() * (this.height - this.cellWidth) / this.cellWidth);
     this.foodLocation = { x: xTemp, y: yTemp };
   }
 

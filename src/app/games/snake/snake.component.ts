@@ -14,7 +14,8 @@ export class SnakeComponent implements OnInit {
   direction = "right";
   snake = [];
   score = 0;
-  cellWidth = 10;
+  cellWidth = 10; //used for both width/height of an individual cell
+  interval;
 
   constructor() { }
 
@@ -31,9 +32,9 @@ export class SnakeComponent implements OnInit {
     this.snake = [{ x: 4, y: 0 }, { x: 3, y: 0 }, { x: 2, y: 0 }, { x: 1, y: 0 }, { x: 0, y: 0 }];
     this.score = 0;
 
-    setInterval(() => {
+    this.interval = setInterval(() => {
       this.drawBoard();
-    }, 400);
+    }, 100);
   }
 
   drawBoard() {
@@ -41,12 +42,12 @@ export class SnakeComponent implements OnInit {
     this.context.fillStyle = "white";
     this.context.fillRect(0, 0, this.width, this.height);
 
-    this.moveSnake();
-
     //paint snake
     this.snake.forEach(cell => {
       this.paintCell(cell.x, cell.y)
     });
+
+    this.moveSnake();
   }
 
   paintCell(x, y) {
@@ -75,10 +76,20 @@ export class SnakeComponent implements OnInit {
         break;
     }
 
+    if (this.checkCollision(xHead, yHead)) {
+      clearInterval(this.interval);
+    }
+
     var tail = this.snake.pop();
     tail.x = xHead;
     tail.y = yHead;
     this.snake.unshift(tail);
+  }
+
+  checkCollision(xHead, yHead) {
+    if (xHead === -1 || xHead == this.width / this.cellWidth || yHead == -1 || yHead === this.height / this.cellWidth) {
+      return true;
+    }
   }
 
   @HostListener('document:keydown', ["$event"])

@@ -4,5 +4,5 @@
         <canvas #canvas id="canvas" class="snake-canvas"></canvas>
     </div>
     <p>Score: {{score}} | HighScore: {{highScore}}</p>
-    <button type="button" (click)="startGame()">Start Game</button>
+    <button type="button" [disabled]="gameOn" (click)="startGame()">Start Game</button>
 </div>

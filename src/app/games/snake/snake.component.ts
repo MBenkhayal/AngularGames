@@ -16,6 +16,7 @@ export class SnakeComponent implements OnInit {
   score = 0;
   highScore: number;
   cellWidth = 10; //used for both width/height of an individual cell
+  gameOn = false;
   interval;
   foodLocation;
 
@@ -35,6 +36,7 @@ export class SnakeComponent implements OnInit {
     this.snake = [{ x: 4, y: 0 }, { x: 3, y: 0 }, { x: 2, y: 0 }, { x: 1, y: 0 }, { x: 0, y: 0 }];
     this.score = 0;
     this.highScore = parseInt(localStorage.getItem("snakeScore")) || 0;
+    this.gameOn = true;
     this.createFood();
 
     this.interval = setInterval(() => {
@@ -95,6 +97,7 @@ export class SnakeComponent implements OnInit {
         localStorage.setItem("snakeScore", this.score.toString());
         this.highScore = this.score;
       }
+      this.gameOn = false;
     }
 
     //need to clean up this code

@@ -14,6 +14,7 @@ export class SnakeComponent implements OnInit {
   direction = "right";
   snake = [];
   score = 0;
+  highScore = 0;
   cellWidth = 10; //used for both width/height of an individual cell
   interval;
   foodLocation;

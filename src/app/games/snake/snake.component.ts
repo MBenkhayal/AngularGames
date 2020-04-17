@@ -14,7 +14,7 @@ export class SnakeComponent implements OnInit {
   direction = "right";
   snake = [];
   score = 0;
-  highScore = 0;
+  highScore = localStorage.getItem("snakeScore") || 0;
   cellWidth = 10; //used for both width/height of an individual cell
   interval;
   foodLocation;
@@ -89,6 +89,10 @@ export class SnakeComponent implements OnInit {
 
     if (this.checkCollision(xHead, yHead)) {
       clearInterval(this.interval);
+      if (this.score > this.highScore) {
+        localStorage.setItem("snakeScore", this.score.toString());
+        this.highScore = this.score;
+      }
     }
 
     //need to clean up this code

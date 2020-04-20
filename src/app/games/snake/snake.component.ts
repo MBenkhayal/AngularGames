@@ -128,7 +128,7 @@ export class SnakeComponent implements OnInit {
 
   checkCollision(xHead, yHead) {
     if (xHead === -1 || xHead == this.width / this.cellWidth || yHead == -1 ||
-      yHead === this.height / this.cellWidth || this.checkWallCollision()) {
+      yHead === this.height / this.cellWidth || this.checkWallCollision(this.snake)) {
       return true;
     }
     if (this.snake.find((cell) => {
@@ -138,11 +138,11 @@ export class SnakeComponent implements OnInit {
     };
   }
 
-  checkWallCollision() {
-    for (var i = 0; i < this.snake.length; i++) {
+  checkWallCollision(arr) {
+    for (var i = 0; i < arr.length; i++) {
       for (var a = 0; a < this.walls.length; a++) {
         for (var j = 0; j < this.walls[a].length; j++) {
-          if (this.snake[i].x == this.walls[a][j].x && this.snake[i].y == this.walls[a][j].y) return true;
+          if (arr[i].x == this.walls[a][j].x && arr[i].y == this.walls[a][j].y) return true;
         }
       }
     }
@@ -150,12 +150,14 @@ export class SnakeComponent implements OnInit {
   }
 
   createFood() {
-    var xTemp = Math.round(Math.random() * (this.width - this.cellWidth) / this.cellWidth);
-    var yTemp = Math.round(Math.random() * (this.height - this.cellWidth) / this.cellWidth);
-    this.foodLocation = { x: xTemp, y: yTemp };
+    do {
+      var xTemp = Math.round(Math.random() * (this.width - this.cellWidth) / this.cellWidth);
+      var yTemp = Math.round(Math.random() * (this.height - this.cellWidth) / this.cellWidth);
+      this.foodLocation = { x: xTemp, y: yTemp };
+    } while (this.checkWallCollision(this.foodLocation));
   }
 
-  createWalls() {
+  createWalls() { //TODO: need to ensure it cant be created anywhere on the snake
     if (this.score % 2 === 0) {
       var tempArr = [];
       var direction = Math.floor(Math.random() * 2);

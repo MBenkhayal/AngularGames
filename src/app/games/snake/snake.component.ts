@@ -13,6 +13,7 @@ export class SnakeComponent implements OnInit {
   height = 500;
   direction = "right";
   snake = [];
+  walls = [];
   score = 0;
   highScore: number;
   cellWidth = 10; //used for both width/height of an individual cell
@@ -34,6 +35,7 @@ export class SnakeComponent implements OnInit {
   startGame() {
     this.direction = "right";
     this.snake = [{ x: 4, y: 0 }, { x: 3, y: 0 }, { x: 2, y: 0 }, { x: 1, y: 0 }, { x: 0, y: 0 }];
+    this.walls = [];
     this.score = 0;
     this.highScore = parseInt(localStorage.getItem("snakeScore")) || 0;
     this.gameOn = true;
@@ -41,7 +43,7 @@ export class SnakeComponent implements OnInit {
 
     this.interval = setInterval(() => {
       this.drawBoard();
-    }, 100);
+    }, 50);
   }
 
   drawBoard() {
@@ -57,12 +59,21 @@ export class SnakeComponent implements OnInit {
     //create and paint food
     this.paintCell(this.foodLocation.x, this.foodLocation.y, true);
 
+    //paint walls
+    for (var i = 0; i < this.walls.length; i++) {
+      for (var j = 0; j < this.walls[i].length; j++) {
+        this.paintCell(this.walls[i][j].x, this.walls[i][j].y, false, true);
+      }
+    }
+
     this.moveSnake();
   }
 
-  paintCell(x, y, isFood = false) {
+  paintCell(x, y, isFood = false, isWall = false) {
     if (isFood) {
       this.context.fillStyle = "brown";
+    } else if (isWall) {
+      this.context.fillStyle = "pink";
     } else {
       this.context.fillStyle = "green";
     }
@@ -106,6 +117,7 @@ export class SnakeComponent implements OnInit {
     if (xHead == this.foodLocation.x && yHead == this.foodLocation.y) {
       this.createFood();
       this.score++;
+      this.createWalls();
     } else {
       tail = this.snake.pop();
     }
@@ -115,7 +127,8 @@ export class SnakeComponent implements OnInit {
   }
 
   checkCollision(xHead, yHead) {
-    if (xHead === -1 || xHead == this.width / this.cellWidth || yHead == -1 || yHead === this.height / this.cellWidth) {
+    if (xHead === -1 || xHead == this.width / this.cellWidth || yHead == -1 ||
+      yHead === this.height / this.cellWidth || this.checkWallCollision()) {
       return true;
     }
     if (this.snake.find((cell) => {
@@ -125,11 +138,44 @@ export class SnakeComponent implements OnInit {
     };
   }
 
+  checkWallCollision() {
+    for (var i = 0; i < this.snake.length; i++) {
+      for (var a = 0; a < this.walls.length; a++) {
+        for (var j = 0; j < this.walls[a].length; j++) {
+          if (this.snake[i].x == this.walls[a][j].x && this.snake[i].y == this.walls[a][j].y) return true;
+        }
+      }
+    }
+    return false;
+  }
+
   createFood() {
     var xTemp = Math.round(Math.random() * (this.width - this.cellWidth) / this.cellWidth);
     var yTemp = Math.round(Math.random() * (this.height - this.cellWidth) / this.cellWidth);
     this.foodLocation = { x: xTemp, y: yTemp };
   }
+
+  createWalls() {
+    if (this.score % 2 === 0) {
+      var tempArr = [];
+      var direction = Math.floor(Math.random() * 2);
+      var start = Math.floor(Math.random() * 49) + 1;
+      var start2 = Math.floor(Math.random() * 49) + 1;
+      if (direction === 0) {
+        for (var i = 0; i < 5; i++) {
+          if (start % 2 === 0) tempArr.push({ x: start2 + i, y: start });
+          else tempArr.push({ x: start, y: start2 + i });
+        }
+      } else {
+        for (var i = 4; i >= 0; i--) {
+          if (start % 2 === 0) tempArr.push({ x: start2 + i, y: start });
+          else tempArr.push({ x: start, y: start2 + i });
+        }
+      }
+      this.walls.push(tempArr);
+    }
+  }
+
 
   @HostListener('document:keydown', ["$event"])
   handleKeydown(event: KeyboardEvent) {

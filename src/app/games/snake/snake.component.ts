@@ -1,3 +1,12 @@
+/*
+ * TODO:
+ * 1) Ensure walls cant be created anywhere on top of the snake.
+ * 2) Add difficulty modes (faster snake, more walls, longer walls)
+ * 3) Move food after a certain amount of time?
+ * 4) Move walls up/down & left/right depending on their direction
+*/
+
+
 import { Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
 
 @Component({

@@ -1,1 +1,8 @@
-<p>brick-breaker works!</p>
+<div style="text-align: center;">
+    <p>Brick Breaker</p>
+    <div>
+        <canvas #brickBreakerCanvas width="750" height="500" id="brickBreakerCanvas"
+            class="brick-breaker-canvas"></canvas>
+    </div>
+    <button type="button" [disabled]="gameOn" (click)="startGame()">Start Game</button>
+</div>

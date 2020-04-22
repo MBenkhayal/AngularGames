@@ -7,6 +7,7 @@ import { GamesListComponent } from './games-list/games-list.component';
 import { TicTacToeComponent } from './games/tic-tac-toe/tic-tac-toe.component';
 import { PageNotFoundComponent } from './pagenotfound/pagenotfound.component';
 import { SnakeComponent } from './games/snake/snake.component';
+import { BrickBreakerComponent } from './games/brick-breaker/brick-breaker.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { SnakeComponent } from './games/snake/snake.component';
     GamesListComponent,
     TicTacToeComponent,
     PageNotFoundComponent,
-    SnakeComponent
+    SnakeComponent,
+    BrickBreakerComponent
   ],
   imports: [
     BrowserModule,

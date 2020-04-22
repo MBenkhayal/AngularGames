@@ -1,3 +1,8 @@
+/*
+ *TODO
+ *Add single player mode option
+*/
+
 import { Component, OnInit, ViewChild } from '@angular/core';
 
 @Component({

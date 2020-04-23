@@ -4,6 +4,7 @@
  * 2) Add difficulty modes (faster snake, more walls, longer walls)
  * 3) Move food after a certain amount of time?
  * 4) Move walls up/down & left/right depending on their direction
+ * 5) Investigate bug where new food doesn't show. Could be due to it spawning on head of snake?
 */
 
 

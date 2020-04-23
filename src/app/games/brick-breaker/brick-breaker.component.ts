@@ -22,6 +22,7 @@ export class BrickBreakerComponent implements OnInit {
   paddlePosition: number;
   movingRight = false;
   movingLeft = false;
+  gameStatus = "Press start game to play!";
 
   constructor() { }
 
@@ -29,12 +30,15 @@ export class BrickBreakerComponent implements OnInit {
     this.context = this.canvas.nativeElement.getContext("2d");
     this.width = this.canvas.nativeElement.width;
     this.height = this.canvas.nativeElement.height;
-    this.xPosition = this.width / 2;
-    this.yPosition = this.height - 50;
-    this.paddlePosition = (this.width - this.paddleWidth) / 2;
   }
 
   startGame() {
+    this.gameStatus = "Playing, good luck!";
+    this.xPosition = this.width / 2;
+    this.yPosition = this.height - 50;
+    this.paddlePosition = (this.width - this.paddleWidth) / 2;
+    this.xOffset = 2;
+    this.yOffset = -2;
     this.interval = setInterval(() => {
       this.drawBoard();
     }, 10);
@@ -80,10 +84,17 @@ export class BrickBreakerComponent implements OnInit {
   }
 
   checkWallCollision() {
-    if (this.yPosition + this.yOffset > this.height - this.ballRadius || this.yPosition + this.yOffset < this.ballRadius) {
+    if (this.yPosition + this.yOffset < this.ballRadius) {
       this.yOffset = - this.yOffset;
+    } else if (this.yPosition + this.yOffset > this.height - this.ballRadius) {
+      if (this.xPosition > this.paddlePosition && this.xPosition < this.paddlePosition + this.paddleWidth) {
+        this.yOffset = -this.yOffset;
+      } else {
+        clearInterval(this.interval);
+        this.gameStatus = "Game Over!";
+      }
     }
-    if (this.xPosition + this.xOffset > this.width - this.ballRadius || this.xPosition + this.xOffset < this.ballRadius) {
+    if (this.xPosition + this.xOffset < this.ballRadius || this.xPosition + this.xOffset > this.width - this.ballRadius) {
       this.xOffset = - this.xOffset;
     }
   }

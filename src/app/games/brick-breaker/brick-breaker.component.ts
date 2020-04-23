@@ -20,9 +20,17 @@ export class BrickBreakerComponent implements OnInit {
   paddleHeight = 10;
   paddleWidth = 100;
   paddlePosition: number;
+  brickRows = 5;
+  brickColumns = 3;
+  brickWidth = 100;
+  brickHeight = 20;
+  brickPadding = 10;
+  brickOffset = 100;
+  bricks = [];
   movingRight = false;
   movingLeft = false;
   gameStatus = "Press start game to play!";
+  gameOn = false;
 
   constructor() { }
 
@@ -33,12 +41,14 @@ export class BrickBreakerComponent implements OnInit {
   }
 
   startGame() {
+    this.gameOn = true;
     this.gameStatus = "Playing, good luck!";
     this.xPosition = this.width / 2;
     this.yPosition = this.height - 50;
     this.paddlePosition = (this.width - this.paddleWidth) / 2;
     this.xOffset = 2;
     this.yOffset = -2;
+    this.generateBricks();
     this.interval = setInterval(() => {
       this.drawBoard();
     }, 10);
@@ -50,6 +60,7 @@ export class BrickBreakerComponent implements OnInit {
     this.drawBall();
     this.checkWallCollision();
     this.drawPaddle();
+    this.drawBricks();
 
     this.xPosition += this.xOffset;
     this.yPosition += this.yOffset;
@@ -83,6 +94,20 @@ export class BrickBreakerComponent implements OnInit {
     }
   }
 
+  drawBricks() {
+    for (var i = 0; i < this.brickRows; i++) {
+      for (var j = 0; j < this.brickColumns; j++) {
+        this.bricks[i][j].x = i * (this.brickWidth + this.brickPadding) + this.brickOffset;
+        this.bricks[i][j].y = j * (this.brickHeight + this.brickPadding) + this.brickOffset;
+        this.context.beginPath();
+        this.context.rect(this.bricks[i][j].x, this.bricks[i][j].y, this.brickWidth, this.brickHeight);
+        this.context.fillStyle = "purple";
+        this.context.fill();
+        this.context.closePath();
+      }
+    }
+  }
+
   checkWallCollision() {
     if (this.yPosition + this.yOffset < this.ballRadius) {
       this.yOffset = - this.yOffset;
@@ -92,10 +117,20 @@ export class BrickBreakerComponent implements OnInit {
       } else {
         clearInterval(this.interval);
         this.gameStatus = "Game Over!";
+        this.gameOn = false;
       }
     }
     if (this.xPosition + this.xOffset < this.ballRadius || this.xPosition + this.xOffset > this.width - this.ballRadius) {
       this.xOffset = - this.xOffset;
+    }
+  }
+
+  generateBricks() {
+    for (var i = 0; i < this.brickRows; i++) {
+      this.bricks[i] = [];
+      for (var j = 0; j < this.brickColumns; j++) {
+        this.bricks[i][j] = { x: 0, y: 0 };
+      }
     }
   }
 

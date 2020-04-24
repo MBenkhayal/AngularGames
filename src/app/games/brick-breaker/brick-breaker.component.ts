@@ -61,6 +61,7 @@ export class BrickBreakerComponent implements OnInit {
     this.checkWallCollision();
     this.drawPaddle();
     this.drawBricks();
+    this.checkBrickCollision();
 
     this.xPosition += this.xOffset;
     this.yPosition += this.yOffset;
@@ -97,13 +98,15 @@ export class BrickBreakerComponent implements OnInit {
   drawBricks() {
     for (var i = 0; i < this.brickRows; i++) {
       for (var j = 0; j < this.brickColumns; j++) {
-        this.bricks[i][j].x = i * (this.brickWidth + this.brickPadding) + this.brickOffset;
-        this.bricks[i][j].y = j * (this.brickHeight + this.brickPadding) + this.brickOffset;
-        this.context.beginPath();
-        this.context.rect(this.bricks[i][j].x, this.bricks[i][j].y, this.brickWidth, this.brickHeight);
-        this.context.fillStyle = "purple";
-        this.context.fill();
-        this.context.closePath();
+        if (this.bricks[i][j].showWall) {
+          this.bricks[i][j].x = i * (this.brickWidth + this.brickPadding) + this.brickOffset;
+          this.bricks[i][j].y = j * (this.brickHeight + this.brickPadding) + this.brickOffset;
+          this.context.beginPath();
+          this.context.rect(this.bricks[i][j].x, this.bricks[i][j].y, this.brickWidth, this.brickHeight);
+          this.context.fillStyle = "purple";
+          this.context.fill();
+          this.context.closePath();
+        }
       }
     }
   }
@@ -125,11 +128,26 @@ export class BrickBreakerComponent implements OnInit {
     }
   }
 
+  checkBrickCollision() {
+    for (let i = 0; i < this.brickRows; i++) {
+      for (let j = 0; j < this.brickColumns; j++) {
+        if (this.bricks[i][j].showWall &&
+          this.xPosition + this.ballRadius > this.bricks[i][j].x &&
+          this.xPosition + this.ballRadius < this.bricks[i][j].x + this.brickWidth &&
+          this.yPosition + this.ballRadius > this.bricks[i][j].y &&
+          this.yPosition + this.ballRadius < this.bricks[i][j].y + this.brickHeight) {
+          this.yOffset = -this.yOffset;
+          this.bricks[i][j].showWall = 0;
+        }
+      }
+    }
+  }
+
   generateBricks() {
-    for (var i = 0; i < this.brickRows; i++) {
+    for (let i = 0; i < this.brickRows; i++) {
       this.bricks[i] = [];
-      for (var j = 0; j < this.brickColumns; j++) {
-        this.bricks[i][j] = { x: 0, y: 0 };
+      for (let j = 0; j < this.brickColumns; j++) {
+        this.bricks[i][j] = { x: 0, y: 0, showWall: 1 };
       }
     }
   }

@@ -1,3 +1,11 @@
+/*
+ * TODO:
+ * 1) set up the brick collision so corners aren't ignored
+ * 2) change blocks size on levelup
+ * 3) change block location based on new size on levelup
+ * 4) add powerups
+*/
+
 import { Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
 
 @Component({

@@ -10,6 +10,7 @@ export class BrickBreakerComponent implements OnInit {
 
   context: any;
   interval: any;
+  intervalSpeed: number;
   width: number;
   height: number;
   xPosition: number;
@@ -31,6 +32,7 @@ export class BrickBreakerComponent implements OnInit {
   movingLeft = false;
   gameStatus = "Press start game to play!";
   gameOn = false;
+  score = 0;
 
   constructor() { }
 
@@ -41,6 +43,8 @@ export class BrickBreakerComponent implements OnInit {
   }
 
   startGame() {
+    this.intervalSpeed = 10;
+    this.score = 0;
     this.gameOn = true;
     this.gameStatus = "Playing, good luck!";
     this.xPosition = this.width / 2;
@@ -51,7 +55,7 @@ export class BrickBreakerComponent implements OnInit {
     this.generateBricks();
     this.interval = setInterval(() => {
       this.drawBoard();
-    }, 10);
+    }, this.intervalSpeed);
   }
 
   drawBoard() {
@@ -138,6 +142,10 @@ export class BrickBreakerComponent implements OnInit {
           this.yPosition + this.ballRadius < this.bricks[i][j].y + this.brickHeight) {
           this.yOffset = -this.yOffset;
           this.bricks[i][j].showWall = 0;
+          this.score++;
+          if (this.score % 15 == 0) {
+            this.levelUp();
+          }
         }
       }
     }
@@ -150,6 +158,16 @@ export class BrickBreakerComponent implements OnInit {
         this.bricks[i][j] = { x: 0, y: 0, showWall: 1 };
       }
     }
+  }
+
+  levelUp() {
+    this.intervalSpeed--;
+    clearInterval(this.interval);
+    this.interval = setInterval(() => {
+      this.drawBoard();
+    }, this.intervalSpeed);
+    this.bricks = [];
+    this.generateBricks();
   }
 
   @HostListener('document:keydown', ["$event"])

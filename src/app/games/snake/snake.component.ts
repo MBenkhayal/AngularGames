@@ -137,7 +137,7 @@ export class SnakeComponent implements OnInit {
   }
 
   checkCollision(xHead, yHead) {
-    if (xHead === -1 || xHead == this.width / this.cellWidth || yHead == -1 ||
+    if (xHead === -1 || xHead === this.width / this.cellWidth || yHead === -1 ||
       yHead === this.height / this.cellWidth || this.checkWallCollision(this.snake)) {
       return true;
     }

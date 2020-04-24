@@ -65,6 +65,7 @@ export class BrickBreakerComponent implements OnInit {
     this.checkWallCollision();
     this.drawPaddle();
     this.drawBricks();
+    this.drawScore();
     this.checkBrickCollision();
 
     this.xPosition += this.xOffset;
@@ -113,6 +114,12 @@ export class BrickBreakerComponent implements OnInit {
         }
       }
     }
+  }
+
+  drawScore() {
+    this.context.font = "12px Arial";
+    this.context.fillStyle = "red";
+    this.context.fillText("Score: " + this.score, 8, 20);
   }
 
   checkWallCollision() {

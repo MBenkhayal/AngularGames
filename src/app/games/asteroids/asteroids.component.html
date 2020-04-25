@@ -1,1 +1,7 @@
-<p>asteroids works!</p>
+<div style="text-align: center;">
+    <p>Asteroids</p>
+    <div>
+        <canvas #asteroidsCanvas width="750" height="500" id="asteroidsCanvas" class="asteroids-canvas"></canvas>
+    </div>
+    <button type="button" [disabled]="gameOn" (click)="startGame()">Start Game</button>
+</div>

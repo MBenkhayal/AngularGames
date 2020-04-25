@@ -1,9 +1,11 @@
 /*
  * TODO:
- * 1) set up the brick collision so corners aren't ignored
- * 2) change blocks size on levelup
- * 3) change block location based on new size on levelup
- * 4) add powerups
+ * 1) randomize ball starting direction/angle
+ * 3) better physics on hit/angle changes?
+ * 2) set up the brick collision so corners aren't ignored
+ * 3) change blocks size on levelup
+ * 4) change block location based on new size on levelup
+ * 5) add powerups
 */
 
 import { Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
@@ -41,6 +43,7 @@ export class BrickBreakerComponent implements OnInit {
   gameStatus = "Press start game to play!";
   gameOn = false;
   score = 0;
+  highScore: number;
 
   constructor() { }
 
@@ -48,11 +51,13 @@ export class BrickBreakerComponent implements OnInit {
     this.context = this.canvas.nativeElement.getContext("2d");
     this.width = this.canvas.nativeElement.width;
     this.height = this.canvas.nativeElement.height;
+    this.highScore = parseInt(localStorage.getItem("brickBreakerScore")) || 0;
   }
 
   startGame() {
     this.intervalSpeed = 10;
     this.score = 0;
+    this.highScore = parseInt(localStorage.getItem("brickBreakerScore")) || 0;
     this.gameOn = true;
     this.gameStatus = "Playing, good luck!";
     this.xPosition = this.width / 2;
@@ -127,7 +132,7 @@ export class BrickBreakerComponent implements OnInit {
   drawScore() {
     this.context.font = "12px Arial";
     this.context.fillStyle = "red";
-    this.context.fillText("Score: " + this.score, 8, 20);
+    this.context.fillText(`Score: ${this.score} Highscore: ${this.highScore}`, 8, 20);
   }
 
   checkWallCollision() {
@@ -140,6 +145,10 @@ export class BrickBreakerComponent implements OnInit {
         clearInterval(this.interval);
         this.gameStatus = "Game Over!";
         this.gameOn = false;
+        if (this.score > this.highScore) {
+          localStorage.setItem("brickBreakerScore", this.score.toString());
+          this.highScore = this.score;
+        }
       }
     }
     if (this.xPosition + this.xOffset < this.ballRadius || this.xPosition + this.xOffset > this.width - this.ballRadius) {

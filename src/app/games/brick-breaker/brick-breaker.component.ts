@@ -199,8 +199,7 @@ export class BrickBreakerComponent implements OnInit {
     var key = event.keyCode;
     if ((key == 37 || key == 65)) {
       this.movingLeft = true;
-    }
-    else if ((key == 39 || key == 68)) {
+    } else if ((key == 39 || key == 68)) {
       this.movingRight = true;
     }
   }
@@ -210,8 +209,7 @@ export class BrickBreakerComponent implements OnInit {
     var key = event.keyCode;
     if ((key == 37 || key == 65)) {
       this.movingLeft = false;
-    }
-    else if ((key == 39 || key == 68)) {
+    } else if ((key == 39 || key == 68)) {
       this.movingRight = false;
     }
   }

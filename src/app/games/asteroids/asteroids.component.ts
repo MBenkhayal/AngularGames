@@ -38,9 +38,10 @@ export class AsteroidsComponent implements OnInit {
     var key = event.keyCode;
     if ((key == 37 || key == 65)) {
       this.turningLeft = true;
-    }
-    else if ((key == 39 || key == 68)) {
+    } else if ((key == 39 || key == 68)) {
       this.turningRight = true;
+    } else if (key == 32) {
+      //shoot
     }
   }
 
@@ -49,8 +50,7 @@ export class AsteroidsComponent implements OnInit {
     var key = event.keyCode;
     if ((key == 37 || key == 65)) {
       this.turningLeft = false;
-    }
-    else if ((key == 39 || key == 68)) {
+    } else if ((key == 39 || key == 68)) {
       this.turningRight = false;
     }
   }

@@ -75,7 +75,6 @@ export class AsteroidsComponent implements OnInit {
     console.log(this.spaceshipX, this.spaceshipY);
   }
 
-
   @HostListener('document:keydown', ["$event"])
   handleKeydown(event: KeyboardEvent) {
     var key = event.keyCode;

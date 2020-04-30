@@ -1,5 +1,14 @@
 // Spaceship source: https://opengameart.org/content/spaceship-8
 
+
+
+/***************************
+ * 
+ * ADD DIRECTIONALGAMEOBJECT GENERIC CLASS
+ * 
+ */
+
+
 import { Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
 
 @Component({
@@ -11,12 +20,20 @@ export class AsteroidsComponent implements OnInit {
   @ViewChild("asteroidsCanvas", { static: true }) canvas: ElementRef<HTMLCanvasElement>;
 
   context: any;
+  interval: any;
+  intervalSpeed = 10;
   gameOn = false;
   width: number;
   height: number;
   spaceship = new Image();
   turningLeft = false;
   turningRight = false;
+  spaceshipX: number;
+  spaceshipY: number;
+  spaceshipSpeed = 1;
+  spaceshipAngle = 0;
+  spaceshipWidth = 50;
+  spaceshipHeight = 50;
 
   constructor() { }
 
@@ -28,19 +45,44 @@ export class AsteroidsComponent implements OnInit {
   }
 
   startGame() {
-    this.context.drawImage(this.spaceship, this.width / 2 - 25, this.height / 2 - 25, 50, 50);
+    this.spaceshipX = this.width / 2 - 25;
+    this.spaceshipY = this.height / 2 - 25;
+    this.context.drawImage(this.spaceship, this.spaceshipX, this.spaceshipY, this.spaceshipWidth, this.spaceshipHeight);
+
+    this.interval = setInterval(() => {
+      this.drawBoard();
+    }, this.intervalSpeed);
   }
 
+  drawBoard() {
+    this.context.clearRect(0, 0, this.width, this.height);
+
+    this.drawShip();
+  }
+
+  drawShip() {
+    this.context.save();
+    this.context.translate(this.spaceshipX, this.spaceshipY);
+    this.context.rotate(this.spaceshipAngle);
+    // this.context.fillRect(this.spaceshipWidth / -2, this.spaceshipHeight / -2, this.spaceshipWidth, this.spaceshipHeight);
+    this.context.drawImage(this.spaceship, this.spaceshipX, this.spaceshipY, this.spaceshipWidth, this.spaceshipHeight);
+    this.context.restore();
+
+    // this.spaceshipAngle += 0 * Math.PI / 180;
+    this.spaceshipX += this.spaceshipSpeed * Math.sin(this.spaceshipAngle);
+    this.spaceshipY -= this.spaceshipSpeed * Math.cos(this.spaceshipAngle);
+    console.log(this.spaceshipX, this.spaceshipY);
+  }
 
 
   @HostListener('document:keydown', ["$event"])
   handleKeydown(event: KeyboardEvent) {
     var key = event.keyCode;
-    if ((key == 37 || key == 65)) {
+    if ((key == 37 || key == 65)) { //left
       this.turningLeft = true;
-    } else if ((key == 39 || key == 68)) {
+    } else if ((key == 39 || key == 68)) { //right
       this.turningRight = true;
-    } else if (key == 32) {
+    } else if (key == 32) { //space
       //shoot
     }
   }
@@ -48,9 +90,9 @@ export class AsteroidsComponent implements OnInit {
   @HostListener('document:keyup', ["$event"])
   handleKeyup(event: KeyboardEvent) {
     var key = event.keyCode;
-    if ((key == 37 || key == 65)) {
+    if ((key == 37 || key == 65)) { //left
       this.turningLeft = false;
-    } else if ((key == 39 || key == 68)) {
+    } else if ((key == 39 || key == 68)) { //right
       this.turningRight = false;
     }
   }

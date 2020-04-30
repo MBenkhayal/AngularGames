@@ -30,7 +30,7 @@ export class AsteroidsComponent implements OnInit {
   turningRight = false;
   spaceshipX: number;
   spaceshipY: number;
-  spaceshipSpeed = 1;
+  spaceshipSpeed = 0;
   spaceshipAngle = 0;
   spaceshipWidth = 50;
   spaceshipHeight = 50;
@@ -45,9 +45,10 @@ export class AsteroidsComponent implements OnInit {
   }
 
   startGame() {
+    this.spaceshipSpeed = 0;
     this.spaceshipX = this.width / 2 - 25;
     this.spaceshipY = this.height / 2 - 25;
-    this.context.drawImage(this.spaceship, this.spaceshipX, this.spaceshipY, this.spaceshipWidth, this.spaceshipHeight);
+    // this.context.drawImage(this.spaceship, this.spaceshipX, this.spaceshipY, this.spaceshipWidth, this.spaceshipHeight);
 
     this.interval = setInterval(() => {
       this.drawBoard();
@@ -62,13 +63,13 @@ export class AsteroidsComponent implements OnInit {
 
   drawShip() {
     this.context.save();
+    this.context.drawImage(this.spaceship, this.spaceshipX, this.spaceshipY, this.spaceshipWidth, this.spaceshipHeight);
     this.context.translate(this.spaceshipX, this.spaceshipY);
     this.context.rotate(this.spaceshipAngle);
-    // this.context.fillRect(this.spaceshipWidth / -2, this.spaceshipHeight / -2, this.spaceshipWidth, this.spaceshipHeight);
-    this.context.drawImage(this.spaceship, this.spaceshipX, this.spaceshipY, this.spaceshipWidth, this.spaceshipHeight);
     this.context.restore();
 
     // this.spaceshipAngle += 0 * Math.PI / 180;
+    console.log(this.spaceshipX, this.spaceshipY)
     this.spaceshipX += this.spaceshipSpeed * Math.sin(this.spaceshipAngle);
     this.spaceshipY -= this.spaceshipSpeed * Math.cos(this.spaceshipAngle);
     console.log(this.spaceshipX, this.spaceshipY);
@@ -78,10 +79,14 @@ export class AsteroidsComponent implements OnInit {
   @HostListener('document:keydown', ["$event"])
   handleKeydown(event: KeyboardEvent) {
     var key = event.keyCode;
-    if ((key == 37 || key == 65)) { //left
+    if (key == 37 || key == 65) { //left
       this.turningLeft = true;
-    } else if ((key == 39 || key == 68)) { //right
+    } else if (key == 39 || key == 68) { //right
       this.turningRight = true;
+    } else if (key == 38 || key == 87) { //up
+      this.spaceshipSpeed = 2;
+    } else if (key == 40 || key == 83) { //down
+      this.spaceshipSpeed = -1;
     } else if (key == 32) { //space
       //shoot
     }
@@ -90,10 +95,14 @@ export class AsteroidsComponent implements OnInit {
   @HostListener('document:keyup', ["$event"])
   handleKeyup(event: KeyboardEvent) {
     var key = event.keyCode;
-    if ((key == 37 || key == 65)) { //left
+    if (key == 37 || key == 65) { //left
       this.turningLeft = false;
-    } else if ((key == 39 || key == 68)) { //right
+    } else if (key == 39 || key == 68) { //right
       this.turningRight = false;
+    } else if (key == 38 || key == 87) { //up
+      this.spaceshipSpeed = 0;
+    } else if (key == 40 || key == 83) { //down
+      this.spaceshipSpeed = 0;
     }
   }
 }

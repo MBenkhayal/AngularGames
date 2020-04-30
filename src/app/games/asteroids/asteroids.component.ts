@@ -34,6 +34,7 @@ export class AsteroidsComponent implements OnInit {
   spaceshipAngle = 0;
   spaceshipWidth = 50;
   spaceshipHeight = 50;
+  drifting: boolean;
 
   constructor() { }
 
@@ -67,12 +68,20 @@ export class AsteroidsComponent implements OnInit {
     this.context.translate(this.spaceshipX, this.spaceshipY);
     this.context.rotate(this.spaceshipAngle);
     this.context.restore();
+    console.log(this.spaceshipSpeed)
+    if (this.drifting && this.spaceshipSpeed != 0) {
+      if (this.spaceshipSpeed > 0) {
+        this.spaceshipSpeed -= .025;
+        this.spaceshipSpeed = Number(this.spaceshipSpeed.toFixed(3));
+      } else if (this.spaceshipSpeed < 0) {
+        this.spaceshipSpeed += .025;
+        this.spaceshipSpeed = Number(this.spaceshipSpeed.toFixed(3));
+      }
+    }
 
     // this.spaceshipAngle += 0 * Math.PI / 180;
-    console.log(this.spaceshipX, this.spaceshipY)
     this.spaceshipX += this.spaceshipSpeed * Math.sin(this.spaceshipAngle);
     this.spaceshipY -= this.spaceshipSpeed * Math.cos(this.spaceshipAngle);
-    console.log(this.spaceshipX, this.spaceshipY);
   }
 
   @HostListener('document:keydown', ["$event"])
@@ -80,12 +89,16 @@ export class AsteroidsComponent implements OnInit {
     var key = event.keyCode;
     if (key == 37 || key == 65) { //left
       this.turningLeft = true;
+      this.drifting = false;
     } else if (key == 39 || key == 68) { //right
       this.turningRight = true;
+      this.drifting = false;
     } else if (key == 38 || key == 87) { //up
       this.spaceshipSpeed = 2;
+      this.drifting = false;
     } else if (key == 40 || key == 83) { //down
       this.spaceshipSpeed = -1;
+      this.drifting = false;
     } else if (key == 32) { //space
       //shoot
     }
@@ -99,9 +112,11 @@ export class AsteroidsComponent implements OnInit {
     } else if (key == 39 || key == 68) { //right
       this.turningRight = false;
     } else if (key == 38 || key == 87) { //up
-      this.spaceshipSpeed = 0;
+      // this.spaceshipSpeed = 0;
+      this.drifting = true;
     } else if (key == 40 || key == 83) { //down
-      this.spaceshipSpeed = 0;
+      // this.spaceshipSpeed = 0;
+      this.drifting = true;
     }
   }
 }

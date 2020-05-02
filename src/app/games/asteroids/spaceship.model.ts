@@ -8,9 +8,12 @@ export class Spaceship {
     moveAngle: number;
     speed: number;
 
-    InitializeSpaceship(canvasWidth, canvasHeight) {
+    Spaceship() {
         this.image = new Image();
         this.image.src = './assets/spaceship.png';
+    }
+
+    InitializeSpaceship(canvasWidth, canvasHeight) {
         this.x = canvasWidth / 2 - 25;
         this.y = canvasHeight / 2 - 25;
         this.width = 0;

@@ -10,6 +10,7 @@
 
 
 import { Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
+import { Spaceship } from './spaceship.model';
 
 @Component({
   selector: 'app-asteroids',
@@ -23,33 +24,23 @@ export class AsteroidsComponent implements OnInit {
   interval: any;
   intervalSpeed = 10;
   gameOn = false;
-  width: number;
-  height: number;
-  spaceship = new Image();
-  turningLeft = false;
-  turningRight = false;
-  spaceshipX: number;
-  spaceshipY: number;
-  spaceshipSpeed = 0;
-  spaceshipAngle = 0;
-  spaceshipWidth = 50;
-  spaceshipHeight = 50;
+  canvasWidth: number;
+  canvasHeight: number;
+  spaceship = new Spaceship();
   drifting: boolean;
 
   constructor() { }
 
   ngOnInit(): void {
     this.context = this.canvas.nativeElement.getContext("2d");
-    this.width = this.canvas.nativeElement.width;
-    this.height = this.canvas.nativeElement.height;
-    this.spaceship.src = '../../../assets/spiked ship 3. small.blue_.png';
+    this.canvasWidth = this.canvas.nativeElement.width;
+    this.canvasHeight = this.canvas.nativeElement.height;
   }
 
   startGame() {
-    this.spaceshipSpeed = 0;
-    this.spaceshipX = this.width / 2 - 25;
-    this.spaceshipY = this.height / 2 - 25;
-    // this.context.drawImage(this.spaceship, this.spaceshipX, this.spaceshipY, this.spaceshipWidth, this.spaceshipHeight);
+    this.spaceship.InitializeSpaceship(this.canvasWidth, this.canvasHeight);
+
+    // this.context.drawImage(this.spaceship, this.spaceship.x, this.spaceship.y, this.spaceshipWidth, this.spaceshipHeight);
 
     this.interval = setInterval(() => {
       this.drawBoard();
@@ -57,47 +48,56 @@ export class AsteroidsComponent implements OnInit {
   }
 
   drawBoard() {
-    this.context.clearRect(0, 0, this.width, this.height);
+    this.context.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
 
     this.drawShip();
   }
 
   drawShip() {
     this.context.save();
-    this.context.drawImage(this.spaceship, this.spaceshipX, this.spaceshipY, this.spaceshipWidth, this.spaceshipHeight);
-    this.context.translate(this.spaceshipX, this.spaceshipY);
-    this.context.rotate(this.spaceshipAngle);
+    this.context.drawImage(this.spaceship.image, this.spaceship.x / 2, this.spaceship.y / 2, this.spaceship.width, this.spaceship.height);
+
+    this.context.translate(this.canvasWidth / 2, this.canvasHeight / 2);
+
+    this.context.rotate(this.spaceship.angle);
     this.context.restore();
-    console.log(this.spaceshipSpeed)
-    if (this.drifting && this.spaceshipSpeed != 0) {
-      if (this.spaceshipSpeed > 0) {
-        this.spaceshipSpeed -= .025;
-        this.spaceshipSpeed = Number(this.spaceshipSpeed.toFixed(3));
-      } else if (this.spaceshipSpeed < 0) {
-        this.spaceshipSpeed += .025;
-        this.spaceshipSpeed = Number(this.spaceshipSpeed.toFixed(3));
+    if (this.drifting && this.spaceship.speed != 0) {
+      if (this.spaceship.speed > 0) {
+        this.spaceship.speed -= .025;
+        this.spaceship.speed = Number(this.spaceship.speed.toFixed(3));
+      } else if (this.spaceship.speed < 0) {
+        this.spaceship.speed += .025;
+        this.spaceship.speed = Number(this.spaceship.speed.toFixed(3));
       }
     }
 
-    // this.spaceshipAngle += 0 * Math.PI / 180;
-    this.spaceshipX += this.spaceshipSpeed * Math.sin(this.spaceshipAngle);
-    this.spaceshipY -= this.spaceshipSpeed * Math.cos(this.spaceshipAngle);
+    this.spaceship.angle += this.spaceship.moveAngle * Math.PI / 180;
+    this.spaceship.x += this.spaceship.speed * Math.sin(this.spaceship.angle);
+    this.spaceship.y -= this.spaceship.speed * Math.cos(this.spaceship.angle);
+  }
+
+  calculateSpeed() {
+
+  }
+
+  calculateAngles() {
+
   }
 
   @HostListener('document:keydown', ["$event"])
   handleKeydown(event: KeyboardEvent) {
     var key = event.keyCode;
     if (key == 37 || key == 65) { //left
-      this.turningLeft = true;
+      this.spaceship.moveAngle = -1;
       this.drifting = false;
     } else if (key == 39 || key == 68) { //right
-      this.turningRight = true;
+      this.spaceship.moveAngle = 1;
       this.drifting = false;
     } else if (key == 38 || key == 87) { //up
-      this.spaceshipSpeed = 2;
+      this.spaceship.speed = 2;
       this.drifting = false;
     } else if (key == 40 || key == 83) { //down
-      this.spaceshipSpeed = -1;
+      this.spaceship.speed = -1;
       this.drifting = false;
     } else if (key == 32) { //space
       //shoot
@@ -108,14 +108,14 @@ export class AsteroidsComponent implements OnInit {
   handleKeyup(event: KeyboardEvent) {
     var key = event.keyCode;
     if (key == 37 || key == 65) { //left
-      this.turningLeft = false;
+      this.spaceship.moveAngle = 0;
     } else if (key == 39 || key == 68) { //right
-      this.turningRight = false;
+      this.spaceship.moveAngle = 0;
     } else if (key == 38 || key == 87) { //up
-      // this.spaceshipSpeed = 0;
+      // this.spaceship.speed = 0;
       this.drifting = true;
     } else if (key == 40 || key == 83) { //down
-      // this.spaceshipSpeed = 0;
+      // this.spaceship.speed = 0;
       this.drifting = true;
     }
   }

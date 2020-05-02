@@ -26,7 +26,7 @@ export class AsteroidsComponent implements OnInit {
   gameOn = false;
   canvasWidth: number;
   canvasHeight: number;
-  spaceship = new Spaceship();
+  spaceship: Spaceship;
   drifting: boolean;
 
   constructor() { }
@@ -35,6 +35,7 @@ export class AsteroidsComponent implements OnInit {
     this.context = this.canvas.nativeElement.getContext("2d");
     this.canvasWidth = this.canvas.nativeElement.width;
     this.canvasHeight = this.canvas.nativeElement.height;
+    this.spaceship = new Spaceship();
   }
 
   startGame() {
@@ -55,7 +56,7 @@ export class AsteroidsComponent implements OnInit {
 
   drawShip() {
     this.context.save();
-    this.context.drawImage(this.spaceship.image, this.spaceship.x / 2, this.spaceship.y / 2, this.spaceship.width, this.spaceship.height);
+    this.context.drawImage(this.spaceship.image, this.spaceship.x, this.spaceship.y, this.spaceship.width, this.spaceship.height);
 
     this.context.translate(this.canvasWidth / 2, this.canvasHeight / 2);
 

@@ -50,10 +50,10 @@ export class PongComponent implements OnInit {
       this.context.fill();
       this.context.closePath();
 
-      if (paddle.direction == "up") {
+      if (paddle.direction == "up" && (paddle.y + paddle.height / 2) < this.height) {
         paddle.y += 3;
         paddle.position = this.height - paddle.y - (paddle.height / 2);
-      } else if (paddle.direction == "down") {
+      } else if (paddle.direction == "down" && (paddle.y - paddle.height / 2) > 0) {
         paddle.y -= 3;
         paddle.position = this.height - paddle.y - (paddle.height / 2);
       }

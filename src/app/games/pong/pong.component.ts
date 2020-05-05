@@ -95,6 +95,13 @@ export class PongComponent implements OnInit {
   }
 
   checkWallCollision() {
+    if (this.ballX + this.ballRadius > this.width - 5) {
+      this.gameStatus = "You Win!";
+      clearInterval(this.interval);
+    } else if (this.ballX - this.ballRadius < 5) {
+      this.gameStatus = "You lose!";
+      clearInterval(this.interval);
+    }
     if (this.ballY + this.ballRadius === this.height || this.ballY - this.ballRadius === 0) {
       this.ballOffsetY = -this.ballOffsetY;
     }

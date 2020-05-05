@@ -20,6 +20,7 @@ export class PongComponent implements OnInit {
   ballOffsetX: number;
   ballOffsetY: number;
   ballRadius = 10;
+  gameStatus = "Press Start Game to play!";
 
   constructor() { }
 
@@ -37,8 +38,14 @@ export class PongComponent implements OnInit {
     this.gameOn = true;
     this.ballX = this.width / 2;
     this.ballY = this.height / 2;
-    this.ballOffsetX = Math.floor((Math.random() - .5) * 5);
-    this.ballOffsetY = Math.floor((Math.random() - .5) * 5);
+    do {
+      this.ballOffsetX = Math.floor((Math.random() - .5) * 5);
+    } while (this.ballOffsetX === 0);
+    do {
+      this.ballOffsetY = Math.floor((Math.random() - .5) * 5);
+    } while (this.ballOffsetY === 0);
+
+    this.gameStatus = "Game on!";
 
     this.interval = setInterval(() => {
       this.drawBoard();

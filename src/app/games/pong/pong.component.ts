@@ -37,8 +37,8 @@ export class PongComponent implements OnInit {
     this.gameOn = true;
     this.ballX = this.width / 2;
     this.ballY = this.height / 2;
-    this.ballOffsetX = Math.floor(Math.random() * 5);
-    this.ballOffsetY = Math.floor(Math.random() * 5);
+    this.ballOffsetX = Math.floor((Math.random() - .5) * 5);
+    this.ballOffsetY = Math.floor((Math.random() - .5) * 5);
 
     this.interval = setInterval(() => {
       this.drawBoard();

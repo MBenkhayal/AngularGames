@@ -17,6 +17,8 @@ export class PongComponent implements OnInit {
   paddles = []; //0 is player, 1 is computer
   ballX: number;
   ballY: number;
+  ballOffsetX: number;
+  ballOffsetY: number;
   ballRadius = 10;
 
   constructor() { }
@@ -35,6 +37,8 @@ export class PongComponent implements OnInit {
     this.gameOn = true;
     this.ballX = this.width / 2;
     this.ballY = this.height / 2;
+    this.ballOffsetX = Math.floor(Math.random() * 5);
+    this.ballOffsetY = Math.floor(Math.random() * 5);
 
     this.interval = setInterval(() => {
       this.drawBoard();
@@ -46,6 +50,10 @@ export class PongComponent implements OnInit {
 
     this.drawPaddles();
     this.drawBall();
+    this.checkCollision();
+
+    this.ballX += this.ballOffsetX;
+    this.ballY += this.ballOffsetY;
   }
 
   drawPaddles() {
@@ -72,6 +80,21 @@ export class PongComponent implements OnInit {
     this.context.fillStyle = "red";
     this.context.fill();
     this.context.closePath();
+  }
+
+  checkCollision() {
+    this.checkWallCollision();
+    this.checkPaddleCollision();
+  }
+
+  checkWallCollision() {
+    if (this.ballY + this.ballRadius === this.height || this.ballY - this.ballRadius === 0) {
+      this.ballOffsetY = -this.ballOffsetY;
+    }
+  }
+
+  checkPaddleCollision() {
+
   }
 
   @HostListener('document:keydown', ["$event"])

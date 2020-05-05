@@ -15,6 +15,9 @@ export class PongComponent implements OnInit {
   height = 500;
   gameOn = false;
   paddles = []; //0 is player, 1 is computer
+  ballX: number;
+  ballY: number;
+  ballRadius = 10;
 
   constructor() { }
 
@@ -30,6 +33,8 @@ export class PongComponent implements OnInit {
 
   startGame() {
     this.gameOn = true;
+    this.ballX = this.width / 2;
+    this.ballY = this.height / 2;
 
     this.interval = setInterval(() => {
       this.drawBoard();
@@ -40,6 +45,7 @@ export class PongComponent implements OnInit {
     this.context.clearRect(0, 0, this.width, this.height);
 
     this.drawPaddles();
+    this.drawBall();
   }
 
   drawPaddles() {
@@ -58,6 +64,14 @@ export class PongComponent implements OnInit {
         paddle.position = this.height - paddle.y - (paddle.height / 2);
       }
     });
+  }
+
+  drawBall() {
+    this.context.beginPath();
+    this.context.arc(this.ballX, this.ballY, this.ballRadius, 0, Math.PI * 2);
+    this.context.fillStyle = "red";
+    this.context.fill();
+    this.context.closePath();
   }
 
   @HostListener('document:keydown', ["$event"])

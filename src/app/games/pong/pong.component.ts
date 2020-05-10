@@ -108,13 +108,13 @@ export class PongComponent implements OnInit {
   }
 
   checkPaddleCollision() {
-
-    // player paddle
-    console.log("first: ", this.ballY + this.ballRadius)
-    console.log("second: ", this.paddles[0].position)
     if (this.ballX - this.ballRadius <= this.paddles[0].x + this.paddles[0].width &&
       this.ballY + this.ballRadius >= this.paddles[0].position &&
       this.ballY + this.ballRadius <= this.paddles[0].position + this.paddles[0].height) {
+      this.ballOffsetX = -this.ballOffsetX;
+    } else if (this.ballX + this.ballRadius >= this.paddles[1].x &&
+      this.ballY + this.ballRadius >= this.paddles[1].position &&
+      this.ballY + this.ballRadius <= this.paddles[1].position + this.paddles[1].height) {
       this.ballOffsetX = -this.ballOffsetX;
     }
   }

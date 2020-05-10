@@ -55,12 +55,21 @@ export class PongComponent implements OnInit {
   drawBoard() {
     this.context.clearRect(0, 0, this.width, this.height);
 
+    this.moveComputerPaddle();
     this.drawPaddles();
     this.drawBall();
     this.checkCollision();
 
     this.ballX += this.ballOffsetX;
     this.ballY += this.ballOffsetY;
+  }
+
+  moveComputerPaddle() {
+    if (this.ballY > this.paddles[1].position) {
+      this.paddles[1].direction = "down";
+    } else if (this.ballY < this.paddles[1].position) {
+      this.paddles[1].direction = "up";
+    }
   }
 
   drawPaddles() {

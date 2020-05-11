@@ -1,3 +1,9 @@
+/* TODO
+ * 1) slow down paddle speed after 20? hits
+ * 2) tally hits for score?
+ * 3) figure out curve of ball collision against paddles, not just direct from x
+*/
+
 import { Component, OnInit, ElementRef, ViewChild, HostListener } from '@angular/core';
 import { Paddle } from './paddle.model';
 
@@ -133,7 +139,8 @@ export class PongComponent implements OnInit {
   }
 
   checkPaddleCollision() {
-    if (this.ballX - this.ballRadius <= this.paddles[0].x + this.paddles[0].width &&
+    if (this.ballOffsetX < 0 &&
+      this.ballX - this.ballRadius <= this.paddles[0].x + this.paddles[0].width &&
       this.ballY + this.ballRadius >= this.paddles[0].position &&
       this.ballY + this.ballRadius <= this.paddles[0].position + this.paddles[0].height) {
       this.ballOffsetX = -this.ballOffsetX;
@@ -152,7 +159,8 @@ export class PongComponent implements OnInit {
           this.ballOffsetY += .1;
         }
       }
-    } else if (this.ballX + this.ballRadius >= this.paddles[1].x &&
+    } else if (this.ballOffsetX > 0 &&
+      this.ballX + this.ballRadius >= this.paddles[1].x &&
       this.ballY + this.ballRadius >= this.paddles[1].position &&
       this.ballY + this.ballRadius <= this.paddles[1].position + this.paddles[1].height) {
       this.updateNumHits();

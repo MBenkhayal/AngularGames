@@ -1,5 +1,7 @@
 # AngularGames
 
+This project is some simple versions of popular games I create for fun in my free time. Games utilize the mouse, arrow keys, and WASD to play, as applicable.
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.6.
 
 ## Development server

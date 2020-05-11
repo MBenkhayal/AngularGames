@@ -1,7 +1,8 @@
 /* TODO
- * 1) slow down paddle speed after 20? hits
- * 2) tally hits for score?
- * 3) figure out curve of ball collision against paddles, not just direct from x
+ * 1) figure out curve of ball collision against paddles, not just direct from x
+ * 2) Implement more in depth score keeping for points scored to a victory (ie first to 5 wins)
+ *    Computer can also get smarter as player scores points
+ * 3) add effects for hitting the ball while moving in the same direction (exists for opposite direction)
 */
 
 import { Component, OnInit, ElementRef, ViewChild, HostListener } from '@angular/core';
@@ -29,6 +30,7 @@ export class PongComponent implements OnInit {
   gameStatus = "Press Start Game to play!";
   numHits: number;
   updateXOffset: boolean;
+  paddleSpeed: number;
 
   constructor() { }
 
@@ -43,8 +45,9 @@ export class PongComponent implements OnInit {
   }
 
   startGame() {
-    this.gameOn = true;
     this.numHits = 0;
+    this.paddleSpeed = 3;
+    this.gameOn = true;
     this.updateXOffset = false;
     this.ballX = this.width / 2;
     this.ballY = this.height / 2;
@@ -101,10 +104,10 @@ export class PongComponent implements OnInit {
       this.context.closePath();
 
       if (paddle.direction == "up" && (paddle.y + paddle.height / 2) < this.height) {
-        paddle.y += 3;
+        paddle.y += this.paddleSpeed;
         paddle.position = this.height - paddle.y - (paddle.height / 2);
       } else if (paddle.direction == "down" && (paddle.y - paddle.height / 2) > 0) {
-        paddle.y -= 3;
+        paddle.y -= this.paddleSpeed;
         paddle.position = this.height - paddle.y - (paddle.height / 2);
       }
     });
@@ -172,6 +175,9 @@ export class PongComponent implements OnInit {
     this.numHits++;
     if (this.numHits % 5 === 0) {
       this.updateXOffset = true;
+    }
+    if (this.numHits % 10 === 0) {
+      this.paddleSpeed -= .1;
     }
   }
 

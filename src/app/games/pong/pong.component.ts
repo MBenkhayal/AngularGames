@@ -21,6 +21,8 @@ export class PongComponent implements OnInit {
   ballOffsetY: number;
   ballRadius = 10;
   gameStatus = "Press Start Game to play!";
+  numHits: number;
+  updateXOffset: boolean;
 
   constructor() { }
 
@@ -36,6 +38,8 @@ export class PongComponent implements OnInit {
 
   startGame() {
     this.gameOn = true;
+    this.numHits = 0;
+    this.updateXOffset = false;
     this.ballX = this.width / 2;
     this.ballY = this.height / 2;
     do {
@@ -55,11 +59,20 @@ export class PongComponent implements OnInit {
   drawBoard() {
     this.context.clearRect(0, 0, this.width, this.height);
 
+    this.checkCollision();
     this.moveComputerPaddle();
     this.drawPaddles();
     this.drawBall();
-    this.checkCollision();
 
+    if (this.updateXOffset) {
+      if (this.ballOffsetX < 0) {
+        this.ballOffsetX -= .1;
+      } else if (this.ballOffsetX > 0) {
+        this.ballOffsetX += .1;
+      }
+      this.updateXOffset = false;
+    }
+    console.log(this.ballOffsetX);
     this.ballX += this.ballOffsetX;
     this.ballY += this.ballOffsetY;
   }
@@ -125,6 +138,7 @@ export class PongComponent implements OnInit {
       this.ballY + this.ballRadius >= this.paddles[0].position &&
       this.ballY + this.ballRadius <= this.paddles[0].position + this.paddles[0].height) {
       this.ballOffsetX = -this.ballOffsetX;
+      this.updateNumHits();
       //each time the player hits the ball, increase yoffset a bit
       if (this.ballOffsetY < 0) {
         this.ballOffsetY -= .1;
@@ -135,7 +149,15 @@ export class PongComponent implements OnInit {
     } else if (this.ballX + this.ballRadius >= this.paddles[1].x &&
       this.ballY + this.ballRadius >= this.paddles[1].position &&
       this.ballY + this.ballRadius <= this.paddles[1].position + this.paddles[1].height) {
+      this.updateNumHits();
       this.ballOffsetX = -this.ballOffsetX;
+    }
+  }
+
+  updateNumHits() {
+    this.numHits++;
+    if (this.numHits % 5 === 0) {
+      this.updateXOffset = true;
     }
   }
 

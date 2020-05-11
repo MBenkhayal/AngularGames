@@ -69,6 +69,8 @@ export class PongComponent implements OnInit {
       this.paddles[1].direction = "down";
     } else if (this.ballY < this.paddles[1].position) {
       this.paddles[1].direction = "up";
+    } else {
+      this.paddles[1].direction = "";
     }
   }
 
@@ -106,12 +108,14 @@ export class PongComponent implements OnInit {
   checkWallCollision() {
     if (this.ballX + this.ballRadius > this.width) {
       this.gameStatus = "You win!";
+      this.gameOn = false;
       clearInterval(this.interval);
     } else if (this.ballX - this.ballRadius < 0) {
       this.gameStatus = "You lose!";
+      this.gameOn = false;
       clearInterval(this.interval);
     }
-    if (this.ballY + this.ballRadius === this.height || this.ballY - this.ballRadius === 0) {
+    if (this.ballY + this.ballRadius > this.height || this.ballY - this.ballRadius < 0) {
       this.ballOffsetY = -this.ballOffsetY;
     }
   }
@@ -121,6 +125,13 @@ export class PongComponent implements OnInit {
       this.ballY + this.ballRadius >= this.paddles[0].position &&
       this.ballY + this.ballRadius <= this.paddles[0].position + this.paddles[0].height) {
       this.ballOffsetX = -this.ballOffsetX;
+      //each time the player hits the ball, increase yoffset a bit
+      if (this.ballOffsetY < 0) {
+        this.ballOffsetY -= .1;
+
+      } else if (this.ballOffsetY > 0) {
+        this.ballOffsetY += .1;
+      }
     } else if (this.ballX + this.ballRadius >= this.paddles[1].x &&
       this.ballY + this.ballRadius >= this.paddles[1].position &&
       this.ballY + this.ballRadius <= this.paddles[1].position + this.paddles[1].height) {

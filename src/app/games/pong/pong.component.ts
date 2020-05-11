@@ -140,10 +140,17 @@ export class PongComponent implements OnInit {
       this.updateNumHits();
       //each time the player hits the ball, increase yoffset a bit
       if (this.ballOffsetY < 0) {
-        this.ballOffsetY -= .1;
-
+        if (this.paddles[0].direction === "down") {
+          this.ballOffsetY += .05;
+        } else {
+          this.ballOffsetY -= .1;
+        }
       } else if (this.ballOffsetY > 0) {
-        this.ballOffsetY += .1;
+        if (this.paddles[0].direction === "up") {
+          this.ballOffsetY -= .05;
+        } else {
+          this.ballOffsetY += .1;
+        }
       }
     } else if (this.ballX + this.ballRadius >= this.paddles[1].x &&
       this.ballY + this.ballRadius >= this.paddles[1].position &&

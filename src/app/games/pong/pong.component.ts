@@ -72,7 +72,6 @@ export class PongComponent implements OnInit {
       }
       this.updateXOffset = false;
     }
-    console.log(this.ballOffsetX);
     this.ballX += this.ballOffsetX;
     this.ballY += this.ballOffsetY;
   }

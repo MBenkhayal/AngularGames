@@ -3,6 +3,11 @@
  * 2) Implement more in depth score keeping for points scored to a victory (ie first to 5 wins)
  *    Computer can also get smarter as player scores points
  * 3) add effects for hitting the ball while moving in the same direction (exists for opposite direction)
+ * 4) look into lag on some of the speeds generated
+ * 5) remove super slow start speeds (x and y offset need to start 2.5-5)
+ * 6) allow curving/spin when hitting the ball in the opposite direction, instead of just a basic operation
+ * 7) paddles don't have a default speed, they speed up to a max that either takes longer over time or 
+ *    is a lower max over time
 */
 
 import { Component, OnInit, ElementRef, ViewChild, HostListener } from '@angular/core';

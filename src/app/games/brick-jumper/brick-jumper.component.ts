@@ -12,4 +12,7 @@ export class BrickJumperComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  startGame() {
+
+  }
 }

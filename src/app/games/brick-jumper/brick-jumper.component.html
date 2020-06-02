@@ -1,1 +1,9 @@
-<p>brick-jumper works!</p>
+<div style="text-align: center;">
+    <p>Brick Jumper</p>
+    <p>{{gameStatus}}</p>
+    <div>
+        <canvas #brickJumperCanvas width="750" height="500" id="brickJumperrCanvas"
+            class="brick-jumper-canvas"></canvas>
+    </div>
+    <button type="button" [disabled]="gameOn" (click)="startGame()">Start Game</button>
+</div>

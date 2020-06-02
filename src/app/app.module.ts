@@ -9,6 +9,7 @@ import { PageNotFoundComponent } from './pagenotfound/pagenotfound.component';
 import { SnakeComponent } from './games/snake/snake.component';
 import { BrickBreakerComponent } from './games/brick-breaker/brick-breaker.component';
 import { PongComponent } from './games/pong/pong.component';
+import { BrickJumperComponent } from './games/brick-jumper/brick-jumper.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { PongComponent } from './games/pong/pong.component';
     PageNotFoundComponent,
     SnakeComponent,
     BrickBreakerComponent,
-    PongComponent
+    PongComponent,
+    BrickJumperComponent
   ],
   imports: [
     BrowserModule,

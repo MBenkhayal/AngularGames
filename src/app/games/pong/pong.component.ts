@@ -6,8 +6,9 @@
  * 4) look into lag on some of the speeds generated
  * 5) remove super slow start speeds (x and y offset need to start 2.5-5)
  * 6) allow curving/spin when hitting the ball in the opposite direction, instead of just a basic operation
- * 7) paddles don't have a default speed, they speed up to a max that either takes longer over time or 
+ * 7) paddles don't have a default speed, they speed up to a max that either takes longer over time or
  *    is a lower max over time
+ * 8) reset paddle to center on new game
 */
 
 import { Component, OnInit, ElementRef, ViewChild, HostListener } from '@angular/core';
@@ -19,20 +20,20 @@ import { Paddle } from './paddle.model';
   styleUrls: ['./pong.component.scss']
 })
 export class PongComponent implements OnInit {
-  @ViewChild("pongCanvas", { static: true }) canvas: ElementRef<HTMLCanvasElement>;
+  @ViewChild('pongCanvas', { static: true }) canvas: ElementRef<HTMLCanvasElement>;
 
   context: any;
   interval: any;
   width = 750;
   height = 500;
   gameOn = false;
-  paddles = []; //0 is player, 1 is computer
+  paddles = []; // 0 is player, 1 is computer
   ballX: number;
   ballY: number;
   ballOffsetX: number;
   ballOffsetY: number;
   ballRadius = 10;
-  gameStatus = "Press Start Game to play!";
+  gameStatus = 'Press Start Game to play!';
   numHits: number;
   updateXOffset: boolean;
   paddleSpeed: number;
@@ -40,8 +41,8 @@ export class PongComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.context = this.canvas.nativeElement.getContext("2d");
-    var temp = new Paddle();
+    this.context = this.canvas.nativeElement.getContext('2d');
+    let temp = new Paddle();
     temp.initPaddle(0, this.height);
     this.paddles.push(temp);
     temp = new Paddle();
@@ -63,7 +64,7 @@ export class PongComponent implements OnInit {
       this.ballOffsetY = Math.floor((Math.random() - .5) * 5);
     } while (this.ballOffsetY === 0);
 
-    this.gameStatus = "Game on!";
+    this.gameStatus = 'Game on!';
 
     this.interval = setInterval(() => {
       this.drawBoard();
@@ -92,11 +93,11 @@ export class PongComponent implements OnInit {
 
   moveComputerPaddle() {
     if (this.ballY > this.paddles[1].position) {
-      this.paddles[1].direction = "down";
+      this.paddles[1].direction = 'down';
     } else if (this.ballY < this.paddles[1].position) {
-      this.paddles[1].direction = "up";
+      this.paddles[1].direction = 'up';
     } else {
-      this.paddles[1].direction = "";
+      this.paddles[1].direction = '';
     }
   }
 
@@ -108,10 +109,10 @@ export class PongComponent implements OnInit {
       this.context.fill();
       this.context.closePath();
 
-      if (paddle.direction == "up" && (paddle.y + paddle.height / 2) < this.height) {
+      if (paddle.direction === 'up' && (paddle.y + paddle.height / 2) < this.height) {
         paddle.y += this.paddleSpeed;
         paddle.position = this.height - paddle.y - (paddle.height / 2);
-      } else if (paddle.direction == "down" && (paddle.y - paddle.height / 2) > 0) {
+      } else if (paddle.direction === 'down' && (paddle.y - paddle.height / 2) > 0) {
         paddle.y -= this.paddleSpeed;
         paddle.position = this.height - paddle.y - (paddle.height / 2);
       }
@@ -121,7 +122,7 @@ export class PongComponent implements OnInit {
   drawBall() {
     this.context.beginPath();
     this.context.arc(this.ballX, this.ballY, this.ballRadius, 0, Math.PI * 2);
-    this.context.fillStyle = "red";
+    this.context.fillStyle = 'red';
     this.context.fill();
     this.context.closePath();
   }
@@ -133,11 +134,11 @@ export class PongComponent implements OnInit {
 
   checkWallCollision() {
     if (this.ballX + this.ballRadius > this.width) {
-      this.gameStatus = "You win!";
+      this.gameStatus = 'You win!';
       this.gameOn = false;
       clearInterval(this.interval);
     } else if (this.ballX - this.ballRadius < 0) {
-      this.gameStatus = "You lose!";
+      this.gameStatus = 'You lose!';
       this.gameOn = false;
       clearInterval(this.interval);
     }
@@ -153,15 +154,15 @@ export class PongComponent implements OnInit {
       this.ballY + this.ballRadius <= this.paddles[0].position + this.paddles[0].height) {
       this.ballOffsetX = -this.ballOffsetX;
       this.updateNumHits();
-      //each time the player hits the ball, increase yoffset a bit
+      // each time the player hits the ball, increase yoffset a bit
       if (this.ballOffsetY < 0) {
-        if (this.paddles[0].direction === "down") {
+        if (this.paddles[0].direction === 'down') {
           this.ballOffsetY += .05;
         } else {
           this.ballOffsetY -= .1;
         }
       } else if (this.ballOffsetY > 0) {
-        if (this.paddles[0].direction === "up") {
+        if (this.paddles[0].direction === 'up') {
           this.ballOffsetY -= .05;
         } else {
           this.ballOffsetY += .1;
@@ -186,21 +187,21 @@ export class PongComponent implements OnInit {
     }
   }
 
-  @HostListener('document:keydown', ["$event"])
+  @HostListener('document:keydown', ['$event'])
   handleKeydown(event: KeyboardEvent) {
-    var key = event.keyCode;
-    if (key == 38 || key == 87) { //up
-      this.paddles[0].direction = "up";
-    } else if (key == 40 || key == 83) { //down
-      this.paddles[0].direction = "down";
+    const key = event.key;
+    if (key === 'ArrowUp' || key === 'w') { // up
+      this.paddles[0].direction = 'up';
+    } else if (key === 'ArrowDown' || key === 's') { // down
+      this.paddles[0].direction = 'down';
     }
   }
 
-  @HostListener('document:keyup', ["$event"])
+  @HostListener('document:keyup', ['$event'])
   handleKeyup(event: KeyboardEvent) {
-    var key = event.keyCode;
-    if (key == 38 || key == 87 || key == 40 || key == 83) {
-      this.paddles[0].direction = "";
+    const key = event.key;
+    if (key === 'ArrowUp' || key === 'w' || key === 'ArrowDown' || key === 's') {
+      this.paddles[0].direction = '';
     }
   }
 }

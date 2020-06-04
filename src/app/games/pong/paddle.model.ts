@@ -13,7 +13,7 @@ export class Paddle {
         this.width = 10;
         this.height = 75;
         this.position = canvasHeight - this.y - (this.height / 2);
-        this.color = "white";
-        this.direction = "";
+        this.color = 'white';
+        this.direction = '';
     }
 }

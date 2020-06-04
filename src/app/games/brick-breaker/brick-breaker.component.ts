@@ -16,7 +16,7 @@ import { Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular
   styleUrls: ['./brick-breaker.component.scss']
 })
 export class BrickBreakerComponent implements OnInit {
-  @ViewChild("brickBreakerCanvas", { static: true }) canvas: ElementRef<HTMLCanvasElement>;
+  @ViewChild('brickBreakerCanvas', { static: true }) canvas: ElementRef<HTMLCanvasElement>;
 
   context: any;
   interval: any;
@@ -40,7 +40,7 @@ export class BrickBreakerComponent implements OnInit {
   bricks = [];
   movingRight = false;
   movingLeft = false;
-  gameStatus = "Press start game to play!";
+  gameStatus = 'Press start game to play!';
   gameOn = false;
   score = 0;
   highScore: number;
@@ -48,18 +48,18 @@ export class BrickBreakerComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.context = this.canvas.nativeElement.getContext("2d");
+    this.context = this.canvas.nativeElement.getContext('2d');
     this.width = this.canvas.nativeElement.width;
     this.height = this.canvas.nativeElement.height;
-    this.highScore = parseInt(localStorage.getItem("brickBreakerScore")) || 0;
+    this.highScore = parseInt(localStorage.getItem('brickBreakerScore'), 10) || 0;
   }
 
   startGame() {
     this.intervalSpeed = 10;
     this.score = 0;
-    this.highScore = parseInt(localStorage.getItem("brickBreakerScore")) || 0;
+    this.highScore = parseInt(localStorage.getItem('brickBreakerScore'), 10) || 0;
     this.gameOn = true;
-    this.gameStatus = "Playing, good luck!";
+    this.gameStatus = 'Playing, good luck!';
     this.xPosition = this.width / 2;
     this.yPosition = this.height - 50;
     this.paddlePosition = (this.width - this.paddleWidth) / 2;
@@ -88,7 +88,7 @@ export class BrickBreakerComponent implements OnInit {
   drawBall() {
     this.context.beginPath();
     this.context.arc(this.xPosition, this.yPosition, this.ballRadius, 0, Math.PI * 2);
-    this.context.fillStyle = "green";
+    this.context.fillStyle = 'green';
     this.context.fill();
     this.context.closePath();
   }
@@ -96,7 +96,7 @@ export class BrickBreakerComponent implements OnInit {
   drawPaddle() {
     this.context.beginPath();
     this.context.rect(this.paddlePosition, this.height - this.paddleHeight, this.paddleWidth, this.paddleHeight);
-    this.context.fillStyle = "blue";
+    this.context.fillStyle = 'blue';
     this.context.fill();
     this.context.closePath();
 
@@ -114,14 +114,14 @@ export class BrickBreakerComponent implements OnInit {
   }
 
   drawBricks() {
-    for (var i = 0; i < this.brickRows; i++) {
-      for (var j = 0; j < this.brickColumns; j++) {
+    for (let i = 0; i < this.brickRows; i++) {
+      for (let j = 0; j < this.brickColumns; j++) {
         if (this.bricks[i][j].showWall) {
           this.bricks[i][j].x = i * (this.brickWidth + this.brickPadding) + this.brickOffset;
           this.bricks[i][j].y = j * (this.brickHeight + this.brickPadding) + this.brickOffset;
           this.context.beginPath();
           this.context.rect(this.bricks[i][j].x, this.bricks[i][j].y, this.brickWidth, this.brickHeight);
-          this.context.fillStyle = "purple";
+          this.context.fillStyle = 'purple';
           this.context.fill();
           this.context.closePath();
         }
@@ -130,8 +130,8 @@ export class BrickBreakerComponent implements OnInit {
   }
 
   drawScore() {
-    this.context.font = "12px Arial";
-    this.context.fillStyle = "red";
+    this.context.font = '12px Arial';
+    this.context.fillStyle = 'red';
     this.context.fillText(`Score: ${this.score} Highscore: ${this.highScore}`, 8, 20);
   }
 
@@ -143,10 +143,10 @@ export class BrickBreakerComponent implements OnInit {
         this.yOffset = -this.yOffset;
       } else {
         clearInterval(this.interval);
-        this.gameStatus = "Game Over!";
+        this.gameStatus = 'Game Over!';
         this.gameOn = false;
         if (this.score > this.highScore) {
-          localStorage.setItem("brickBreakerScore", this.score.toString());
+          localStorage.setItem('brickBreakerScore', this.score.toString());
           this.highScore = this.score;
         }
       }
@@ -167,7 +167,7 @@ export class BrickBreakerComponent implements OnInit {
           this.yOffset = -this.yOffset;
           this.bricks[i][j].showWall = 0;
           this.score++;
-          if (this.score % 15 == 0) {
+          if (this.score % 15 === 0) {
             this.levelUp();
           }
         }
@@ -194,24 +194,22 @@ export class BrickBreakerComponent implements OnInit {
     this.generateBricks();
   }
 
-  @HostListener('document:keydown', ["$event"])
+  @HostListener('document:keydown', ['$event'])
   handleKeydown(event: KeyboardEvent) {
-    var key = event.keyCode;
-    if ((key == 37 || key == 65)) {
+    const key = event.key;
+    if ((key === 'ArrowLeft' || key === 'a')) {
       this.movingLeft = true;
-    }
-    else if ((key == 39 || key == 68)) {
+    } else if ((key === 'ArrowRight' || key === 'd')) {
       this.movingRight = true;
     }
   }
 
-  @HostListener('document:keyup', ["$event"])
+  @HostListener('document:keyup', ['$event'])
   handleKeyup(event: KeyboardEvent) {
-    var key = event.keyCode;
-    if ((key == 37 || key == 65)) {
+    const key = event.key;
+    if ((key === 'ArrowLeft' || key === 'a')) {
       this.movingLeft = false;
-    }
-    else if ((key == 39 || key == 68)) {
+    } else if ((key === 'ArrowRight' || key === 'd')) {
       this.movingRight = false;
     }
   }

@@ -6,21 +6,21 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 
 @Component({
-  selector: 'tic-tac-toe',
+  selector: 'app-tic-tac-toe',
   templateUrl: './tic-tac-toe.component.html',
   styleUrls: ['./tic-tac-toe.component.scss']
 })
 export class TicTacToeComponent implements OnInit {
-  //get access to all of the individual buttons
-  @ViewChild('00') zeroZero;
-  @ViewChild('01') zeroOne;
-  @ViewChild('02') zeroTwo;
-  @ViewChild('10') oneZero;
-  @ViewChild('11') oneOne;
-  @ViewChild('12') oneTwo;
-  @ViewChild('20') twoZero;
-  @ViewChild('21') twoOne;
-  @ViewChild('22') twoTwo;
+  // get access to all of the individual buttons
+  @ViewChild('00') zeroZero: { nativeElement: { innerText: string; disabled: boolean; }; };
+  @ViewChild('01') zeroOne: { nativeElement: { innerText: string; disabled: boolean; }; };
+  @ViewChild('02') zeroTwo: { nativeElement: { innerText: string; disabled: boolean; }; };
+  @ViewChild('10') oneZero: { nativeElement: { innerText: string; disabled: boolean; }; };
+  @ViewChild('11') oneOne: { nativeElement: { innerText: string; disabled: boolean; }; };
+  @ViewChild('12') oneTwo: { nativeElement: { innerText: string; disabled: boolean; }; };
+  @ViewChild('20') twoZero: { nativeElement: { innerText: string; disabled: boolean; }; };
+  @ViewChild('21') twoOne: { nativeElement: { innerText: string; disabled: boolean; }; };
+  @ViewChild('22') twoTwo: { nativeElement: { innerText: string; disabled: boolean; }; };
 
   playerTurn = '';
   gameStatus = '';
@@ -44,11 +44,11 @@ export class TicTacToeComponent implements OnInit {
     this.turn = 0;
   }
 
-  buttonDisabled(row, col) {
-    return this.gameBoard[row][col] != '';
+  buttonDisabled(row: number, col: number) {
+    return this.gameBoard[row][col] !== '';
   }
 
-  onButtonClick(button, row, col) {
+  onButtonClick(button: { textContent: any; }, row: number, col: number) {
     this.turn++;
     if (this.playerTurn === 'x') {
       this.gameBoard[row][col] = 'x';
@@ -65,21 +65,21 @@ export class TicTacToeComponent implements OnInit {
     }
   }
 
-  checkBoard(lastPlayed) {
-    if (this.gameBoard[0][0] == lastPlayed && this.gameBoard[0][1] == lastPlayed && this.gameBoard[0][2] == lastPlayed ||
-      this.gameBoard[1][0] == lastPlayed && this.gameBoard[1][1] == lastPlayed && this.gameBoard[1][2] == lastPlayed ||
-      this.gameBoard[2][0] == lastPlayed && this.gameBoard[2][1] == lastPlayed && this.gameBoard[2][2] == lastPlayed ||
+  checkBoard(lastPlayed: string) {
+    if (this.gameBoard[0][0] === lastPlayed && this.gameBoard[0][1] === lastPlayed && this.gameBoard[0][2] === lastPlayed ||
+      this.gameBoard[1][0] === lastPlayed && this.gameBoard[1][1] === lastPlayed && this.gameBoard[1][2] === lastPlayed ||
+      this.gameBoard[2][0] === lastPlayed && this.gameBoard[2][1] === lastPlayed && this.gameBoard[2][2] === lastPlayed ||
 
-      this.gameBoard[0][0] == lastPlayed && this.gameBoard[1][0] == lastPlayed && this.gameBoard[2][0] == lastPlayed ||
-      this.gameBoard[0][1] == lastPlayed && this.gameBoard[1][1] == lastPlayed && this.gameBoard[2][1] == lastPlayed ||
-      this.gameBoard[0][2] == lastPlayed && this.gameBoard[1][2] == lastPlayed && this.gameBoard[2][2] == lastPlayed ||
+      this.gameBoard[0][0] === lastPlayed && this.gameBoard[1][0] === lastPlayed && this.gameBoard[2][0] === lastPlayed ||
+      this.gameBoard[0][1] === lastPlayed && this.gameBoard[1][1] === lastPlayed && this.gameBoard[2][1] === lastPlayed ||
+      this.gameBoard[0][2] === lastPlayed && this.gameBoard[1][2] === lastPlayed && this.gameBoard[2][2] === lastPlayed ||
 
-      this.gameBoard[0][0] == lastPlayed && this.gameBoard[1][1] == lastPlayed && this.gameBoard[2][2] == lastPlayed ||
-      this.gameBoard[2][0] == lastPlayed && this.gameBoard[1][1] == lastPlayed && this.gameBoard[0][2] == lastPlayed) {
-      //set all buttons to be disabled, game ends, declare winner
+      this.gameBoard[0][0] === lastPlayed && this.gameBoard[1][1] === lastPlayed && this.gameBoard[2][2] === lastPlayed ||
+      this.gameBoard[2][0] === lastPlayed && this.gameBoard[1][1] === lastPlayed && this.gameBoard[0][2] === lastPlayed) {
+      // set all buttons to be disabled, game ends, declare winner
       this.gameStatus = `The winner is ${lastPlayed}!`;
       this.disableAllButtons();
-    } else if (this.turn == 9) {
+    } else if (this.turn === 9) {
       this.gameStatus = `No winner, please play again!`;
     }
   }

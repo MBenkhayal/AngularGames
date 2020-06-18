@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
+import { PlayerBrick } from './player-brick.model';
 
 @Component({
   selector: 'app-brick-jumper',
@@ -14,6 +15,7 @@ export class BrickJumperComponent implements OnInit {
   width: number;
   height: number;
   gameOn = false;
+  playerPaddle: PlayerBrick;
 
   constructor() { }
 
@@ -21,6 +23,7 @@ export class BrickJumperComponent implements OnInit {
     this.context = this.canvas.nativeElement.getContext('2d');
     this.width = this.canvas.nativeElement.width;
     this.height = this.canvas.nativeElement.height;
+    this.playerPaddle = new PlayerBrick();
   }
 
   startGame() {
@@ -32,6 +35,26 @@ export class BrickJumperComponent implements OnInit {
 
   drawBoard() {
     this.context.clearRect(0, 0, this.width, this.height);
+    this.drawBottomLine();
 
+  }
+
+  drawBottomLine() {
+    this.context.beginPath();
+    this.context.moveTo(0, 451);
+    this.context.lineTo(750, 451);
+    this.context.stroke();
+  }
+
+  drawPlayerBrick() {
+    // 
+  }
+
+  @HostListener('document:keydown', ['$event'])
+  handleKeydown(event: KeyboardEvent) {
+    const key = event.key;
+    if (key === ' ') {
+      //
+    }
   }
 }

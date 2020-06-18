@@ -36,18 +36,22 @@ export class BrickJumperComponent implements OnInit {
   drawBoard() {
     this.context.clearRect(0, 0, this.width, this.height);
     this.drawBottomLine();
-
+    this.drawPlayerBrick();
   }
 
   drawBottomLine() {
     this.context.beginPath();
-    this.context.moveTo(0, 451);
-    this.context.lineTo(750, 451);
+    this.context.moveTo(0, 380);
+    this.context.lineTo(750, 380);
     this.context.stroke();
   }
 
   drawPlayerBrick() {
-    // 
+    this.context.beginPath();
+    this.context.rect(this.playerPaddle.x, this.playerPaddle.y, this.playerPaddle.width, this.playerPaddle.height);
+    this.context.fillStyle = this.playerPaddle.color;
+    this.context.fill();
+    this.context.closePath();
   }
 
   @HostListener('document:keydown', ['$event'])

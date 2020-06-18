@@ -7,11 +7,11 @@ export class PlayerBrick {
     width: number;
 
     constructor() {
-        this.x = 375;
-        this.y = 450;
+        this.x = 360;
+        this.y = 350;
         this.jumpMovement = 0;
         this.color = 'blue';
-        this.height = 10;
-        this.width = 10;
+        this.height = 30;
+        this.width = 30;
     }
 }

@@ -15,7 +15,7 @@ export class BrickJumperComponent implements OnInit {
   width: number;
   height: number;
   gameOn = false;
-  playerPaddle: PlayerBrick;
+  playerBrick: PlayerBrick;
 
   constructor() { }
 
@@ -23,7 +23,7 @@ export class BrickJumperComponent implements OnInit {
     this.context = this.canvas.nativeElement.getContext('2d');
     this.width = this.canvas.nativeElement.width;
     this.height = this.canvas.nativeElement.height;
-    this.playerPaddle = new PlayerBrick();
+    this.playerBrick = new PlayerBrick();
   }
 
   startGame() {
@@ -47,9 +47,23 @@ export class BrickJumperComponent implements OnInit {
   }
 
   drawPlayerBrick() {
+    if (this.playerBrick.jumpDirection === 'up') {
+      if (this.playerBrick.y > this.playerBrick.startingY - 15) {
+        this.playerBrick.y--;
+      } else {
+        this.playerBrick.jumpDirection = 'down';
+      }
+    } else if (this.playerBrick.jumpDirection === 'down') {
+      if (this.playerBrick.y < this.playerBrick.startingY) {
+        this.playerBrick.y++;
+      } else {
+        this.playerBrick.jumpDirection = '';
+      }
+    }
+
     this.context.beginPath();
-    this.context.rect(this.playerPaddle.x, this.playerPaddle.y, this.playerPaddle.width, this.playerPaddle.height);
-    this.context.fillStyle = this.playerPaddle.color;
+    this.context.rect(this.playerBrick.x, this.playerBrick.y, this.playerBrick.width, this.playerBrick.height);
+    this.context.fillStyle = this.playerBrick.color;
     this.context.fill();
     this.context.closePath();
   }
@@ -57,8 +71,8 @@ export class BrickJumperComponent implements OnInit {
   @HostListener('document:keydown', ['$event'])
   handleKeydown(event: KeyboardEvent) {
     const key = event.key;
-    if (key === ' ') {
-      //
+    if (key === ' ' && this.playerBrick.jumpDirection === '') {
+      this.playerBrick.jumpDirection = 'up';
     }
   }
 }

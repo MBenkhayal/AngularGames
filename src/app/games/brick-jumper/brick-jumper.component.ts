@@ -28,6 +28,7 @@ export class BrickJumperComponent implements OnInit {
 
   startGame() {
     this.gameOn = true;
+    this.intervalSpeed = 15;
     this.interval = setInterval(() => {
       this.drawBoard();
     }, this.intervalSpeed);
@@ -48,7 +49,7 @@ export class BrickJumperComponent implements OnInit {
 
   drawPlayerBrick() {
     if (this.playerBrick.jumpDirection === 'up') {
-      if (this.playerBrick.y > this.playerBrick.startingY - 15) {
+      if (this.playerBrick.y > this.playerBrick.startingY - 50) {
         this.playerBrick.y--;
       } else {
         this.playerBrick.jumpDirection = 'down';

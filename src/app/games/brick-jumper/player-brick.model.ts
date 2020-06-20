@@ -1,14 +1,13 @@
-export class PlayerBrick {
-    x: number;
+import { Brick } from './brick.model';
+
+export class PlayerBrick extends Brick {
     startingY: number;
-    y: number;
     jumpMovement: number;
-    height: number;
-    width: number;
     jumpDirection: string;
     color: string;
 
-    constructor() {
+    constructor(x, y, width, height) {
+        super(x, y, width, height);
         this.x = 360;
         this.startingY = 350;
         this.y = this.startingY;

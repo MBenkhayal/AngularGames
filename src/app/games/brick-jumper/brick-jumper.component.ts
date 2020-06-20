@@ -14,7 +14,8 @@ export class BrickJumperComponent implements OnInit {
   intervalSpeed: number;
   width: number;
   height: number;
-  gameOn = false;
+  count: number;
+  gameOn: boolean;
   playerBrick: PlayerBrick;
 
   constructor() { }
@@ -23,12 +24,14 @@ export class BrickJumperComponent implements OnInit {
     this.context = this.canvas.nativeElement.getContext('2d');
     this.width = this.canvas.nativeElement.width;
     this.height = this.canvas.nativeElement.height;
-    this.playerBrick = new PlayerBrick();
+    this.gameOn = false;
+    this.playerBrick = new PlayerBrick(360, 350, 30, 30);
   }
 
   startGame() {
     this.gameOn = true;
     this.intervalSpeed = 15;
+    this.count = 0;
     this.interval = setInterval(() => {
       this.drawBoard();
     }, this.intervalSpeed);
@@ -38,6 +41,12 @@ export class BrickJumperComponent implements OnInit {
     this.context.clearRect(0, 0, this.width, this.height);
     this.drawBottomLine();
     this.drawPlayerBrick();
+
+    this.count += 1;
+    if (this.count === 120) { // create a new object to send at the player brick
+      this.addObstacle();
+      this.count = 0;
+    }
   }
 
   drawBottomLine() {
@@ -67,6 +76,14 @@ export class BrickJumperComponent implements OnInit {
     this.context.fillStyle = this.playerBrick.color;
     this.context.fill();
     this.context.closePath();
+  }
+
+  addObstacle() {
+
+  }
+
+  drawObstacles() {
+
   }
 
   @HostListener('document:keydown', ['$event'])

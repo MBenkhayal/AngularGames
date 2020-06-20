@@ -101,7 +101,9 @@ export class BrickJumperComponent implements OnInit {
   }
 
   removeObstacle() {
-
+    if (this.obstacles[0] && this.obstacles[0].x + this.obstacles[0].width === 0) {
+      this.obstacles.splice(0, 1);
+    }
   }
 
   checkCollision() {

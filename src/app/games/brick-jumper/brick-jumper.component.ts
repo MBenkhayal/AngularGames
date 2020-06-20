@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { PlayerBrick } from './player-brick.model';
+import { Brick } from './brick.model';
 
 @Component({
   selector: 'app-brick-jumper',
@@ -17,6 +18,7 @@ export class BrickJumperComponent implements OnInit {
   count: number;
   gameOn: boolean;
   playerBrick: PlayerBrick;
+  obstacles: Array<Brick>;
 
   constructor() { }
 
@@ -25,13 +27,14 @@ export class BrickJumperComponent implements OnInit {
     this.width = this.canvas.nativeElement.width;
     this.height = this.canvas.nativeElement.height;
     this.gameOn = false;
-    this.playerBrick = new PlayerBrick(360, 350, 30, 30);
+    this.playerBrick = new PlayerBrick(360, 350, 30, 30, 'blue');
   }
 
   startGame() {
     this.gameOn = true;
     this.intervalSpeed = 15;
     this.count = 0;
+    this.obstacles = new Array<Brick>();
     this.interval = setInterval(() => {
       this.drawBoard();
     }, this.intervalSpeed);
@@ -41,6 +44,8 @@ export class BrickJumperComponent implements OnInit {
     this.context.clearRect(0, 0, this.width, this.height);
     this.drawBottomLine();
     this.drawPlayerBrick();
+    this.drawObstacles();
+    this.checkCollision();
 
     this.count += 1;
     if (this.count === 120) { // create a new object to send at the player brick
@@ -79,10 +84,27 @@ export class BrickJumperComponent implements OnInit {
   }
 
   addObstacle() {
-
+    const newBrick = new Brick(750, 360, 20, 20, 'black');
+    this.obstacles.push(newBrick);
   }
 
   drawObstacles() {
+    this.removeObstacle();
+    this.obstacles.forEach(brick => {
+      this.context.beginPath();
+      this.context.rect(brick.x, brick.y, brick.width, brick.height);
+      this.context.fillStyle = brick.color;
+      this.context.fill();
+      this.context.closePath();
+      brick.x -= 2;
+    });
+  }
+
+  removeObstacle() {
+
+  }
+
+  checkCollision() {
 
   }
 

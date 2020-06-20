@@ -4,17 +4,11 @@ export class PlayerBrick extends Brick {
     startingY: number;
     jumpMovement: number;
     jumpDirection: string;
-    color: string;
 
-    constructor(x, y, width, height) {
-        super(x, y, width, height);
-        this.x = 360;
+    constructor(x, y, width, height, color) {
+        super(x, y, width, height, color);
         this.startingY = 350;
-        this.y = this.startingY;
         this.jumpMovement = 0;
-        this.height = 30;
-        this.width = 30;
         this.jumpDirection = '';
-        this.color = 'blue';
     }
 }

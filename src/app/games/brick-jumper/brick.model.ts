@@ -3,11 +3,12 @@ export class Brick {
     y: number;
     width: number;
     height: number;
-
-    constructor(x, y, width, height) {
+    color: string;
+    constructor(x, y, width, height, color) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
+        this.color = color;
     }
 }
